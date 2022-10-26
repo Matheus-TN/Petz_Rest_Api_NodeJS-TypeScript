@@ -1,0 +1,1 @@
+web: cd src/dist; node index.js
