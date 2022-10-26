@@ -24,14 +24,14 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.loginIsValid = exports.loginBodyValidation = void 0;
-var user_1 = require("../controllers/user");
+var controllers_1 = require("../controllers");
 var yup = __importStar(require("yup"));
 exports.loginBodyValidation = yup.object().shape({
     email: yup.string().required().min(1),
     password: yup.string().required().min(1),
 });
 var loginIsValid = function (email) {
-    return user_1.userMock.find(function (user) { return user.email === email; }) === undefined;
+    return controllers_1.userMock.find(function (user) { return user.email === email; }) === undefined;
 };
 exports.loginIsValid = loginIsValid;
 //# sourceMappingURL=login.js.map

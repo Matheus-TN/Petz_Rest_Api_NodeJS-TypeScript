@@ -1,4 +1,4 @@
-import { userMock } from "../controllers/user";
+import { userMock } from "../controllers";
 import ILogin from "../models/login";
 import * as yup from "yup";
 

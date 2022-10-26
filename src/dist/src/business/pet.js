@@ -24,7 +24,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.petExists = exports.petIsvalid = exports.petBodyValidation = void 0;
-var user_1 = require("../controllers/user");
+var controllers_1 = require("../controllers");
 var yup = __importStar(require("yup"));
 exports.petBodyValidation = yup.object().shape({
     petId: yup.number().positive().min(0),
@@ -37,12 +37,12 @@ exports.petBodyValidation = yup.object().shape({
     disease: yup.string(),
 });
 var petIsvalid = function (name, idUser) {
-    return (user_1.petMock.find(function (pet) { return pet.name === name && pet.idUser === idUser; }) ===
-        undefined && user_1.userMock.find(function (user) { return user.userId === idUser; }) !== undefined);
+    return (controllers_1.petMock.find(function (pet) { return pet.name === name && pet.idUser === idUser; }) ===
+        undefined && controllers_1.userMock.find(function (user) { return user.userId === idUser; }) !== undefined);
 };
 exports.petIsvalid = petIsvalid;
 var petExists = function (petId) {
-    return user_1.petMock.find(function (pet) { return pet.petId === petId; }) !== undefined;
+    return controllers_1.petMock.find(function (pet) { return pet.petId === petId; }) !== undefined;
 };
 exports.petExists = petExists;
 //# sourceMappingURL=pet.js.map

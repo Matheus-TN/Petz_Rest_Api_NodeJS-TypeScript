@@ -9,7 +9,7 @@ import {
   postPet,
   updatePet,
   deletePet,
-} from "./src/controllers/user";
+} from "./src/controllers";
 
 const app = express();
 

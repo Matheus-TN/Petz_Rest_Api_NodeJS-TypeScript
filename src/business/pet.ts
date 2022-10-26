@@ -1,4 +1,4 @@
-import { petMock, userMock } from "../controllers/user";
+import { petMock, userMock } from "../controllers";
 import IPet from "../models/pet";
 import * as yup from "yup";
 
