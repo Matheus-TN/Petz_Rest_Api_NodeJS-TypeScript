@@ -23,7 +23,8 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.userBodyValidation = void 0;
+exports.userExists = exports.userBodyValidation = void 0;
+var user_1 = require("../controllers/user");
 var yup = __importStar(require("yup"));
 exports.userBodyValidation = yup.object().shape({
     userId: yup.number().positive().min(0),
@@ -33,4 +34,8 @@ exports.userBodyValidation = yup.object().shape({
     crmv: yup.string(),
     address: yup.string(),
 });
+var userExists = function (userId) {
+    return user_1.userMock.find(function (user) { return user.userId === userId; }) !== undefined;
+};
+exports.userExists = userExists;
 //# sourceMappingURL=user.js.map

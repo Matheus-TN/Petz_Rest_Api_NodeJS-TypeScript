@@ -1,3 +1,4 @@
+import { userMock } from "../controllers/user";
 import IUser from "../models/user";
 import * as yup from "yup";
 
@@ -9,3 +10,7 @@ export const userBodyValidation: yup.SchemaOf<IUser> = yup.object().shape({
   crmv: yup.string(),
   address: yup.string(),
 });
+
+export const userExists = (userId: number): boolean => {
+  return userMock.find((user) => user.userId === userId) !== undefined;
+};

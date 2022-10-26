@@ -23,14 +23,26 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.userBodyValidation = void 0;
+exports.petExists = exports.petIsvalid = exports.petBodyValidation = void 0;
+var user_1 = require("../controllers/user");
 var yup = __importStar(require("yup"));
-exports.userBodyValidation = yup.object().shape({
-    userId: yup.number().positive().min(0),
+exports.petBodyValidation = yup.object().shape({
+    petId: yup.number().positive().min(0),
+    idUser: yup.number().positive().min(0),
     name: yup.string().required().min(1),
-    email: yup.string().required().min(1),
-    password: yup.string().required().min(1),
-    crmv: yup.string(),
-    address: yup.string(),
+    age: yup.number().required().min(0),
+    breed: yup.string().required().min(1),
+    size: yup.number().positive().min(0).max(2),
+    allergy: yup.string(),
+    disease: yup.string(),
 });
-//# sourceMappingURL=user.js.map
+var petIsvalid = function (name, idUser) {
+    return (user_1.petMock.find(function (pet) { return pet.name === name && pet.idUser === idUser; }) ===
+        undefined && user_1.userMock.find(function (user) { return user.userId === idUser; }) !== undefined);
+};
+exports.petIsvalid = petIsvalid;
+var petExists = function (petId) {
+    return user_1.petMock.find(function (pet) { return pet.petId === petId; }) !== undefined;
+};
+exports.petExists = petExists;
+//# sourceMappingURL=pet.js.map

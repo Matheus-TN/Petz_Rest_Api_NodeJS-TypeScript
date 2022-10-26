@@ -36,9 +36,12 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteUser = exports.createUser = exports.getUser = exports.login = exports.userMock = void 0;
+exports.deletePet = exports.updatePet = exports.postPet = exports.getPet = exports.deleteUser = exports.updateUser = exports.createUser = exports.getUser = exports.login = exports.petMock = exports.userMock = void 0;
 var login_1 = require("../business/login");
+var pet_1 = require("../business/pet");
 var user_1 = require("../business/user");
+// --- Devido a falta de uma base de dados, foi utilizado uma lista de mock como solução técnica ---
+// --- dbo.T_User ---
 exports.userMock = [
     {
         userId: 1,
@@ -79,14 +82,74 @@ exports.userMock = [
         address: "address5",
     },
 ];
-var maxUserId = 6;
+// --- dbo.T_Pet ---
+exports.petMock = [
+    {
+        petId: 1,
+        idUser: 1,
+        name: "pet1",
+        age: 1,
+        breed: "breed1",
+        size: 0,
+        allergy: "allergy1",
+        disease: "disease1",
+    },
+    {
+        petId: 2,
+        idUser: 1,
+        name: "pet2",
+        age: 2,
+        breed: "breed2",
+        size: 1,
+        allergy: "allergy2",
+        disease: "disease2",
+    },
+    {
+        petId: 3,
+        idUser: 1,
+        name: "pet3",
+        age: 3,
+        breed: "breed3",
+        size: 2,
+        allergy: "allergy3",
+        disease: "disease3",
+    },
+    {
+        petId: 4,
+        idUser: 2,
+        name: "pet4",
+        age: 4,
+        breed: "breed4",
+        size: 0,
+        allergy: "allergy4",
+        disease: "disease4",
+    },
+    {
+        petId: 5,
+        idUser: 2,
+        name: "pet5",
+        age: 5,
+        breed: "breed5",
+        size: 1,
+        allergy: "allergy5",
+        disease: "disease5",
+    },
+];
+// Variável para simular o auto-incrementador de um banco de dados
+var maxUserId = 5;
+var maxPetId = 5;
+// --- ENDPOINTS REFERENTES A USUARIO/LOGIN ----
+//
+// LOGIN
+// GET - http://localhost:3000/login
 var login = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var validatedLogin, userInfo, error_1, yupError;
+    var validatedLogin, userInfo, pets, error_1, yupError;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
                 validatedLogin = undefined;
                 userInfo = undefined;
+                pets = undefined;
                 _a.label = 1;
             case 1:
                 _a.trys.push([1, 3, , 4]);
@@ -97,7 +160,11 @@ var login = function (req, res) { return __awaiter(void 0, void 0, void 0, funct
                     return user.email === validatedLogin.email &&
                         user.password === validatedLogin.password;
                 });
-                res.status(userInfo ? 200 : 204).send(userInfo);
+                pets = exports.petMock.filter(function (pet) { return pet.idUser === (userInfo === null || userInfo === void 0 ? void 0 : userInfo.userId); });
+                res.send({
+                    user: userInfo,
+                    pets: pets,
+                });
                 return [3 /*break*/, 4];
             case 3:
                 error_1 = _a.sent();
@@ -110,13 +177,29 @@ var login = function (req, res) { return __awaiter(void 0, void 0, void 0, funct
     });
 }); };
 exports.login = login;
+// GET ALL USERS IF DONT HAVE USER ID OR GET USER BY USER ID
+// GET - http://localhost:3000/user/userId?
 var getUser = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var userId_1, users;
     return __generator(this, function (_a) {
-        res.status(200).send(exports.userMock);
+        try {
+            userId_1 = parseInt(req.params.userId);
+            if (userId_1 > 0) {
+                users = undefined;
+                users = exports.userMock.filter(function (user) { return user.userId === userId_1; });
+                return [2 /*return*/, res.status(200).send(users)];
+            }
+            return [2 /*return*/, res.status(200).send(exports.userMock)];
+        }
+        catch (error) {
+            return [2 /*return*/, res.status(400).send(error)];
+        }
         return [2 /*return*/];
     });
 }); };
 exports.getUser = getUser;
+// POST USER
+// POST - http://localhost:3000/user
 var createUser = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var validatedUser, error_2, yupError;
     return __generator(this, function (_a) {
@@ -130,7 +213,8 @@ var createUser = function (req, res) { return __awaiter(void 0, void 0, void 0, 
             case 2:
                 validatedUser = _a.sent();
                 if ((0, login_1.loginIsValid)(validatedUser.email)) {
-                    validatedUser.userId = maxUserId + 1;
+                    maxUserId += 1;
+                    validatedUser.userId = maxUserId;
                     exports.userMock.push(validatedUser);
                     return [2 /*return*/, res.status(201).send(validatedUser)];
                 }
@@ -148,13 +232,169 @@ var createUser = function (req, res) { return __awaiter(void 0, void 0, void 0, 
     });
 }); };
 exports.createUser = createUser;
-var deleteUser = function (req, res) {
-    var userInfo = exports.userMock.find(function (user) { return user.email === req.body.email; });
-    if (userInfo === undefined) {
-        return res.status(404).send("Email inexistente, tente novamente");
-    }
-    exports.userMock = exports.userMock.filter(function (user) { return user.email !== userInfo.email; });
-    return res.status(204).send("Deletado com sucesso");
-};
+// UPDATE USER
+// PUT - http://localhost:3000/user
+var updateUser = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var validatedUser, error_3, yupError;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                validatedUser = undefined;
+                _a.label = 1;
+            case 1:
+                _a.trys.push([1, 3, , 4]);
+                return [4 /*yield*/, user_1.userBodyValidation.validate(req.body)];
+            case 2:
+                validatedUser = _a.sent();
+                if ((0, user_1.userExists)(validatedUser.userId)) {
+                    // Removendo antigo registro
+                    exports.userMock = exports.userMock.filter(function (user) { return user.userId !== validatedUser.userId; });
+                    exports.userMock.push(validatedUser);
+                    return [2 /*return*/, res.status(200).send(validatedUser)];
+                }
+                return [2 /*return*/, res.status(404).send("Usuário inexistente, tente novamente")];
+            case 3:
+                error_3 = _a.sent();
+                yupError = error_3;
+                return [2 /*return*/, res.json({
+                        errors: yupError.message,
+                    })];
+            case 4: return [2 /*return*/];
+        }
+    });
+}); };
+exports.updateUser = updateUser;
+// DELETE USER
+// DELETE - http://localhost:3000/user/userId
+var deleteUser = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var userId_2, userInfo;
+    return __generator(this, function (_a) {
+        try {
+            userId_2 = parseInt(req.params.userId);
+            userInfo = exports.userMock.find(function (user) { return user.userId === userId_2; });
+            if (userInfo === undefined) {
+                return [2 /*return*/, res.status(404).send("usuário inexistente, tente novamente")];
+            }
+            exports.userMock = exports.userMock.filter(function (user) { return user.userId !== userId_2; });
+            exports.petMock = exports.petMock.filter(function (pet) { return pet.idUser !== userId_2; });
+            return [2 /*return*/, res.status(204).send("Deletado com sucesso")];
+        }
+        catch (error) {
+            return [2 /*return*/, res.status(400).send(error)];
+        }
+        return [2 /*return*/];
+    });
+}); };
 exports.deleteUser = deleteUser;
+// --- ENDPOINTS REFERENTES A PET ----
+//
+// GET ALL PETS IF DONT HAVE USER ID OR GET PETS BY USER ID
+// GET = http://localhost:3000/pet/userId?
+var getPet = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var userId_3, pets;
+    return __generator(this, function (_a) {
+        try {
+            userId_3 = parseInt(req.params.userId);
+            if (userId_3 > 0) {
+                pets = undefined;
+                pets = exports.petMock.filter(function (pet) { return pet.idUser === userId_3; });
+                return [2 /*return*/, res.status(200).send(pets)];
+            }
+            return [2 /*return*/, res.status(200).send(exports.petMock)];
+        }
+        catch (error) {
+            return [2 /*return*/, res.status(400).send(error)];
+        }
+        return [2 /*return*/];
+    });
+}); };
+exports.getPet = getPet;
+// POST PET
+// POST - http://localhost:3000/pet
+var postPet = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var validatedPet, error_4, yupError;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                validatedPet = undefined;
+                _a.label = 1;
+            case 1:
+                _a.trys.push([1, 3, , 4]);
+                return [4 /*yield*/, pet_1.petBodyValidation.validate(req.body)];
+            case 2:
+                validatedPet = _a.sent();
+                if ((0, pet_1.petIsvalid)(validatedPet.name, validatedPet.idUser)) {
+                    maxPetId += 1;
+                    validatedPet.petId = maxPetId;
+                    exports.petMock.push(validatedPet);
+                    return [2 /*return*/, res.status(201).send(validatedPet)];
+                }
+                return [2 /*return*/, res.status(409).json({
+                        errors: "nome de pet já cadastrado para este usuário ou usuário inválido, tente novamente",
+                    })];
+            case 3:
+                error_4 = _a.sent();
+                yupError = error_4;
+                res.json({
+                    errors: yupError.message,
+                });
+                return [3 /*break*/, 4];
+            case 4: return [2 /*return*/];
+        }
+    });
+}); };
+exports.postPet = postPet;
+// UPDATE PET
+// PUT - http://localhost:3000/pet
+var updatePet = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var validatedPet, error_5, yupError;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                validatedPet = undefined;
+                _a.label = 1;
+            case 1:
+                _a.trys.push([1, 3, , 4]);
+                return [4 /*yield*/, pet_1.petBodyValidation.validate(req.body)];
+            case 2:
+                validatedPet = _a.sent();
+                if ((0, pet_1.petExists)(validatedPet.petId)) {
+                    // Removendo antigo registro
+                    exports.petMock = exports.petMock.filter(function (pet) { return pet.petId !== validatedPet.petId; });
+                    exports.petMock.push(validatedPet);
+                    return [2 /*return*/, res.status(200).send(validatedPet)];
+                }
+                return [2 /*return*/, res.status(404).send("Pet inexistente, tente novamente")];
+            case 3:
+                error_5 = _a.sent();
+                yupError = error_5;
+                return [2 /*return*/, res.json({
+                        errors: yupError.message,
+                    })];
+            case 4: return [2 /*return*/];
+        }
+    });
+}); };
+exports.updatePet = updatePet;
+// DELETE PET
+// DELETE - http://localhost:3000/pet/petId
+var deletePet = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var petId_1, petInfo;
+    return __generator(this, function (_a) {
+        try {
+            petId_1 = parseInt(req.params.petId);
+            petInfo = exports.petMock.find(function (pet) { return pet.petId === petId_1; });
+            if (petInfo === undefined) {
+                return [2 /*return*/, res.status(404).send("pet inexistente, tente novamente")];
+            }
+            exports.petMock = exports.petMock.filter(function (pet) { return pet.petId !== petId_1; });
+            return [2 /*return*/, res.status(204).send("Deletado com sucesso")];
+        }
+        catch (error) {
+            return [2 /*return*/, res.status(400).send(error)];
+        }
+        return [2 /*return*/];
+    });
+}); };
+exports.deletePet = deletePet;
 //# sourceMappingURL=user.js.map
