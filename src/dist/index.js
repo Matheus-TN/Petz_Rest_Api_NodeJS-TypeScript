@@ -18,7 +18,12 @@ app.get("/pet/:userId?", controllers_1.getPet);
 app.post("/pet", controllers_1.postPet);
 app.put("/pet", controllers_1.updatePet);
 app.delete("/pet/:petId", controllers_1.deletePet);
-app.listen(process.env["PORT"] || 3000, function () {
-    console.log("listening on ".concat(process.env.PORT));
-});
+app.get("/clinica/:clinicaId?", controllers_1.getClinica),
+    app.post("/clinica", controllers_1.postClinica),
+    app.listen(process.env["PORT"] || 3000, function () {
+        console.log("listening on ".concat(process.env.PORT));
+    });
+setInterval(function () {
+    fetch("http://petzapi.herokuapp.com/user/1");
+}, 600 * 1000);
 //# sourceMappingURL=index.js.map

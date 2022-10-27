@@ -36,7 +36,8 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deletePet = exports.updatePet = exports.postPet = exports.getPet = exports.deleteUser = exports.updateUser = exports.createUser = exports.getUser = exports.login = exports.petMock = exports.userMock = void 0;
+exports.postClinica = exports.getClinica = exports.deletePet = exports.updatePet = exports.postPet = exports.getPet = exports.deleteUser = exports.updateUser = exports.createUser = exports.getUser = exports.login = exports.clinicaMock = exports.petMock = exports.userMock = void 0;
+var clinica_1 = require("../business/clinica");
 var login_1 = require("../business/login");
 var pet_1 = require("../business/pet");
 var user_1 = require("../business/user");
@@ -135,9 +136,68 @@ exports.petMock = [
         disease: "disease5",
     },
 ];
+// --- dbo.T_Clinica ---
+exports.clinicaMock = [
+    {
+        clinicaId: 1,
+        nome: 'clinica1',
+        avaliacao: 3,
+        endereco: 'address1',
+        sobre: 'about1',
+        servicos: 'service1',
+        horarios: ["seg - sex", "sab - dom"],
+        pagamento: ["mastercard"],
+        avaliacaoCount: 3
+    },
+    {
+        clinicaId: 2,
+        nome: 'clinica2',
+        avaliacao: 2,
+        endereco: 'address2',
+        sobre: 'about2',
+        servicos: 'service2',
+        horarios: ["seg - sex", "sab - dom"],
+        pagamento: ["mastercard"],
+        avaliacaoCount: 3
+    },
+    {
+        clinicaId: 3,
+        nome: 'clinica3',
+        avaliacao: 2,
+        endereco: 'address3',
+        sobre: 'about3',
+        servicos: 'service3',
+        horarios: ["seg - sex", "sab - dom"],
+        pagamento: ["mastercard"],
+        avaliacaoCount: 5
+    },
+    {
+        clinicaId: 4,
+        nome: 'clinica4',
+        avaliacao: 1,
+        endereco: 'address4',
+        sobre: 'about4',
+        servicos: 'service4',
+        horarios: ["seg - sex", "sab - dom"],
+        pagamento: ["mastercard"],
+        avaliacaoCount: 1
+    },
+    {
+        clinicaId: 5,
+        nome: 'clinica5',
+        avaliacao: 2,
+        endereco: 'address5',
+        sobre: 'about5',
+        servicos: 'service5',
+        horarios: ["seg - sex", "sab - dom"],
+        pagamento: ["mastercard"],
+        avaliacaoCount: 2
+    },
+];
 // Variável para simular o auto-incrementador de um banco de dados
 var maxUserId = 5;
 var maxPetId = 5;
+var maxClinicaId = 5;
 // --- ENDPOINTS REFERENTES A USUARIO/LOGIN ----
 //
 // LOGIN
@@ -397,4 +457,62 @@ var deletePet = function (req, res) { return __awaiter(void 0, void 0, void 0, f
     });
 }); };
 exports.deletePet = deletePet;
+// --- ENDPOINTS REFERENTES A CLINICA ----
+//
+// GET ALL CLINICAS IF DONT HAVE CLINICA ID OR GET CLINICA BY CLINICA ID 
+// GET - http://localhost:3000/clinica/clinicaId?
+var getClinica = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var clinicaId_1, clinicas;
+    return __generator(this, function (_a) {
+        try {
+            clinicaId_1 = parseInt(req.params.clinicaId);
+            if (clinicaId_1 > 0) {
+                clinicas = undefined;
+                clinicas = exports.clinicaMock.filter(function (clinica) { return clinica.clinicaId === clinicaId_1; });
+                return [2 /*return*/, res.status(200).send(clinicas)];
+            }
+            return [2 /*return*/, res.status(200).send(exports.clinicaMock)];
+        }
+        catch (error) {
+            return [2 /*return*/, res.status(400).send(error)];
+        }
+        return [2 /*return*/];
+    });
+}); };
+exports.getClinica = getClinica;
+// POST CLINICA
+// POST - http://localhost:3000/clinica
+var postClinica = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var validatedClinica, error_6, yupError;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                validatedClinica = undefined;
+                _a.label = 1;
+            case 1:
+                _a.trys.push([1, 3, , 4]);
+                return [4 /*yield*/, clinica_1.clinicaBodyValidation.validate(req.body)];
+            case 2:
+                validatedClinica = _a.sent();
+                if ((0, clinica_1.clinicaIsvalid)(validatedClinica.nome)) {
+                    maxClinicaId += 1;
+                    validatedClinica.clinicaId = maxClinicaId;
+                    exports.clinicaMock.push(validatedClinica);
+                    return [2 /*return*/, res.status(201).send(validatedClinica)];
+                }
+                return [2 /*return*/, res.status(409).json({
+                        errors: "nome de clinica já cadastrada, tente novamente",
+                    })];
+            case 3:
+                error_6 = _a.sent();
+                yupError = error_6;
+                res.json({
+                    errors: yupError.message,
+                });
+                return [3 /*break*/, 4];
+            case 4: return [2 /*return*/];
+        }
+    });
+}); };
+exports.postClinica = postClinica;
 //# sourceMappingURL=index.js.map

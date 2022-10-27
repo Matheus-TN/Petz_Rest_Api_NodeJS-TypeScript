@@ -1,11 +1,14 @@
 import { Request, Response } from "express";
+import { clinicaBodyValidation, clinicaIsvalid } from '../business/clinica';
 import { loginBodyValidation, loginIsValid } from "../business/login";
 import { petBodyValidation, petIsvalid, petExists } from "../business/pet";
 import { userBodyValidation, userExists } from "../business/user";
+import IClinica from "../models/clinica";
 import ILogin from "../models/login";
 import IPet from "../models/pet";
 import IUser from "../models/user";
 import * as yup from "yup";
+
 
 // --- Devido a falta de uma base de dados, foi utilizado uma lista de mock como solução técnica ---
 // --- dbo.T_User ---
@@ -104,9 +107,69 @@ export let petMock: IPet[] = [
   },
 ];
 
+// --- dbo.T_Clinica ---
+export let clinicaMock: IClinica[] = [
+  {
+    clinicaId: 1,
+    nome: 'clinica1',
+    avaliacao: 3,
+    endereco: 'address1',
+    sobre: 'about1',
+    servicos: 'service1',
+    horarios: ["seg - sex", "sab - dom"],
+    pagamento: ["mastercard"],
+    avaliacaoCount: 3
+  },
+  {
+    clinicaId: 2,
+    nome: 'clinica2',
+    avaliacao: 2,
+    endereco: 'address2',
+    sobre: 'about2',
+    servicos: 'service2',
+    horarios: ["seg - sex", "sab - dom"],
+    pagamento: ["mastercard"],
+    avaliacaoCount: 3
+  },
+  {
+    clinicaId: 3,
+    nome: 'clinica3',
+    avaliacao: 2,
+    endereco: 'address3',
+    sobre: 'about3',
+    servicos: 'service3',
+    horarios: ["seg - sex", "sab - dom"],
+    pagamento: ["mastercard"],
+    avaliacaoCount: 5
+  },
+  {
+    clinicaId: 4,
+    nome: 'clinica4',
+    avaliacao: 1,
+    endereco: 'address4',
+    sobre: 'about4',
+    servicos: 'service4',
+    horarios: ["seg - sex", "sab - dom"],
+    pagamento: ["mastercard"],
+    avaliacaoCount: 1
+  },
+  {
+    clinicaId: 5,
+    nome: 'clinica5',
+    avaliacao: 2,
+    endereco: 'address5',
+    sobre: 'about5',
+    servicos: 'service5',
+    horarios: ["seg - sex", "sab - dom"],
+    pagamento: ["mastercard"],
+    avaliacaoCount: 2
+  },
+];
+
 // Variável para simular o auto-incrementador de um banco de dados
 let maxUserId: number = 5;
 let maxPetId: number = 5;
+let maxClinicaId: number = 5;
 
 // --- ENDPOINTS REFERENTES A USUARIO/LOGIN ----
 //
@@ -348,3 +411,56 @@ export const deletePet = async (req: Request, res: Response) => {
     return res.status(400).send(error);
   }
 };
+
+// --- ENDPOINTS REFERENTES A CLINICA ----
+//
+// GET ALL CLINICAS IF DONT HAVE CLINICA ID OR GET CLINICA BY CLINICA ID 
+// GET - http://localhost:3000/clinica/clinicaId?
+export const getClinica = async (req: Request, res: Response) => {
+  try {
+    const clinicaId: number = parseInt(req.params.clinicaId);
+
+    if (clinicaId > 0) {
+      let clinicas: IClinica[] | undefined = undefined;
+
+      clinicas = clinicaMock.filter((clinica) => clinica.clinicaId === clinicaId);
+
+      return res.status(200).send(clinicas);
+    }
+
+    return res.status(200).send(clinicaMock);
+  } catch (error) {
+    return res.status(400).send(error);
+  }
+}
+
+// POST CLINICA
+// POST - http://localhost:3000/clinica
+export const postClinica = async (req: Request<{}, {}, IClinica>, res: Response) => {
+  let validatedClinica: IClinica | undefined = undefined;
+
+  try {
+    validatedClinica = await clinicaBodyValidation.validate(req.body);
+
+    if (clinicaIsvalid(validatedClinica.nome)) {
+      maxClinicaId += 1;
+
+      validatedClinica.clinicaId = maxClinicaId;
+
+      clinicaMock.push(validatedClinica);
+
+      return res.status(201).send(validatedClinica);
+    }
+
+    return res.status(409).json({
+      errors:
+        "nome de clinica já cadastrada, tente novamente",
+    });
+  } catch (error) {
+    const yupError = error as yup.ValidationError;
+
+    res.json({
+      errors: yupError.message,
+    });
+  }
+}

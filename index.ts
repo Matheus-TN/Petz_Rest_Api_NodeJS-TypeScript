@@ -9,6 +9,8 @@ import {
   postPet,
   updatePet,
   deletePet,
+  getClinica,
+  postClinica
 } from "./src/controllers";
 
 const cors = require("cors");
@@ -30,6 +32,13 @@ app.post("/pet", postPet);
 app.put("/pet", updatePet);
 app.delete("/pet/:petId", deletePet);
 
+app.get("/clinica/:clinicaId?", getClinica),
+app.post("/clinica", postClinica),
+
 app.listen(process.env["PORT"] || 3000, function () {
   console.log(`listening on ${process.env.PORT}`);
 });
+
+setInterval(() => {
+  fetch("http://petzapi.herokuapp.com/user/1");
+}, 600 * 1000);
