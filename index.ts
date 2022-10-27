@@ -30,6 +30,6 @@ app.post("/pet", postPet);
 app.put("/pet", updatePet);
 app.delete("/pet/:petId", deletePet);
 
-app.listen(3000, function () {
+app.listen(process.env.PORT || 3000, function () {
   console.log("listening on 3000");
 });
