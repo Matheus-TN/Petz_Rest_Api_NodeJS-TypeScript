@@ -23,26 +23,25 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.petExists = exports.petIsvalid = exports.petBodyValidation = void 0;
-var controllers_1 = require("../controllers");
+exports.petValidoParaAtualizar = exports.petValido = exports.petBody = void 0;
 var yup = __importStar(require("yup"));
-exports.petBodyValidation = yup.object().shape({
-    petId: yup.number().positive().min(0),
-    idUser: yup.number().positive().min(0),
-    name: yup.string().required().min(1),
-    age: yup.number().required().min(0),
-    breed: yup.string().required().min(1),
-    size: yup.number().positive().min(0).max(2),
-    allergy: yup.string(),
-    disease: yup.string(),
+var controllers_1 = require("../../controllers");
+exports.petBody = yup.object().shape({
+    petId: yup.number(),
+    idUsuario: yup.number().required().min(1),
+    nome: yup.string().required().min(1),
+    raca: yup.string().required().min(1),
+    idade: yup.number().required().min(0),
+    porte: yup.number().required().min(0).max(2),
+    alergias: yup.string(),
+    doencas: yup.string()
 });
-var petIsvalid = function (name, idUser) {
-    return (controllers_1.petMock.find(function (pet) { return pet.name === name && pet.idUser === idUser; }) ===
-        undefined && controllers_1.userMock.find(function (user) { return user.userId === idUser; }) !== undefined);
+var petValido = function (idUsuario, nome) {
+    return controllers_1.listaDePets.find(function (p) { return p.idUsuario === idUsuario && p.nome === nome; }) === undefined;
 };
-exports.petIsvalid = petIsvalid;
-var petExists = function (petId) {
-    return controllers_1.petMock.find(function (pet) { return pet.petId === petId; }) !== undefined;
+exports.petValido = petValido;
+var petValidoParaAtualizar = function (idUsuario, petId, nome) {
+    return controllers_1.listaDePets.find(function (p) { return p.idUsuario === idUsuario && p.petId !== petId && p.nome === nome; }) === undefined;
 };
-exports.petExists = petExists;
+exports.petValidoParaAtualizar = petValidoParaAtualizar;
 //# sourceMappingURL=pet.js.map

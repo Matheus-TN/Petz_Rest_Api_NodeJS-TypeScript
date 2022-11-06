@@ -36,166 +36,212 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.postClinica = exports.getClinica = exports.deletePet = exports.updatePet = exports.postPet = exports.getPet = exports.deleteUser = exports.updateUser = exports.createUser = exports.getUser = exports.login = exports.clinicaMock = exports.petMock = exports.userMock = void 0;
-var clinica_1 = require("../business/clinica");
-var login_1 = require("../business/login");
-var pet_1 = require("../business/pet");
-var user_1 = require("../business/user");
+exports.deletarClinica = exports.atualizarClinica = exports.criarClinica = exports.buscarClinicas = exports.criarPetRua = exports.buscarPetsRua = exports.deletarPet = exports.atualizarPet = exports.criarPet = exports.buscarPets = exports.deletarUsuario = exports.atualizarUsuario = exports.criarUsuario = exports.buscarUsuarios = exports.login = exports.listaDeClinicas = exports.listDePetsDeRua = exports.listaDePets = exports.listaDeUsuarios = void 0;
+var clinica_1 = require("../business/clinica/clinica");
+var pet_1 = require("../business/pet/pet");
+var petRua_1 = require("../business/petRua/petRua");
+var usuario_1 = require("../business/usuario/usuario");
+var validarEmail_1 = require("../business/validarEmail");
 // --- Devido a falta de uma base de dados, foi utilizado uma lista de mock como solução técnica ---
-// --- dbo.T_User ---
-exports.userMock = [
+// --- dbo.T_Usuario ---
+exports.listaDeUsuarios = [
     {
-        userId: 1,
-        name: "adm1",
-        email: "email1",
-        password: "password1",
-        crmv: "crmv1",
-        address: "address1",
+        email: 'usuario1',
+        senha: 'senha1',
+        usuarioId: 1,
+        nome: 'string1',
+        endereco: 'string1'
     },
     {
-        userId: 2,
-        name: "adm2",
-        email: "email2",
-        password: "password2",
-        crmv: "crmv2",
-        address: "address2",
+        email: 'usuario2',
+        senha: 'senha2',
+        usuarioId: 2,
+        nome: 'string2',
+        endereco: 'string2'
     },
     {
-        userId: 3,
-        name: "adm3",
-        email: "email3",
-        password: "password3",
-        crmv: "crmv3",
-        address: "address3",
+        email: 'usuario3',
+        senha: 'senha3',
+        usuarioId: 3,
+        nome: 'string3',
+        endereco: 'string3'
     },
     {
-        userId: 4,
-        name: "adm4",
-        email: "email4",
-        password: "password4",
-        address: "address4",
+        email: 'usuario4',
+        senha: 'senha4',
+        usuarioId: 4,
+        nome: 'string4',
+        endereco: 'string4'
     },
     {
-        userId: 5,
-        name: "adm5",
-        email: "email5",
-        password: "password5",
-        address: "address5",
-    },
+        email: 'usuario5',
+        senha: 'senha5',
+        usuarioId: 5,
+        nome: 'string5',
+        endereco: 'string5'
+    }
 ];
 // --- dbo.T_Pet ---
-exports.petMock = [
+exports.listaDePets = [
     {
         petId: 1,
-        idUser: 1,
-        name: "pet1",
-        age: 1,
-        breed: "breed1",
-        size: 0,
-        allergy: "allergy1",
-        disease: "disease1",
+        idUsuario: 1,
+        nome: 'string1',
+        raca: 'string1',
+        idade: 1,
+        porte: 0,
+        alergias: 'string',
+        doencas: 'string'
     },
     {
         petId: 2,
-        idUser: 1,
-        name: "pet2",
-        age: 2,
-        breed: "breed2",
-        size: 1,
-        allergy: "allergy2",
-        disease: "disease2",
+        idUsuario: 2,
+        nome: 'string2',
+        raca: 'string2',
+        idade: 2,
+        porte: 1,
+        alergias: 'string',
+        doencas: 'string'
     },
     {
         petId: 3,
-        idUser: 1,
-        name: "pet3",
-        age: 3,
-        breed: "breed3",
-        size: 2,
-        allergy: "allergy3",
-        disease: "disease3",
+        idUsuario: 3,
+        nome: 'string3',
+        raca: 'string3',
+        idade: 3,
+        porte: 2
     },
     {
         petId: 4,
-        idUser: 2,
-        name: "pet4",
-        age: 4,
-        breed: "breed4",
-        size: 0,
-        allergy: "allergy4",
-        disease: "disease4",
+        idUsuario: 4,
+        nome: 'string4',
+        raca: 'string4',
+        idade: 4,
+        porte: 0
     },
     {
         petId: 5,
-        idUser: 2,
-        name: "pet5",
-        age: 5,
-        breed: "breed5",
-        size: 1,
-        allergy: "allergy5",
-        disease: "disease5",
+        idUsuario: 5,
+        nome: 'string5',
+        raca: 'string5',
+        idade: 5,
+        porte: 1
+    }
+];
+// --- dbo.T_PetRua ---
+exports.listDePetsDeRua = [
+    {
+        nome: 'string1',
+        localEncontrado: 'string1',
+        ferido: 0,
+        desnutrido: 0,
+        agressivo: 0,
+        porte: 0,
+    },
+    {
+        nome: 'string2',
+        localEncontrado: 'string2',
+        ferido: 1,
+        desnutrido: 1,
+        agressivo: 1,
+        porte: 1,
+    },
+    {
+        nome: 'string3',
+        localEncontrado: 'string3',
+        ferido: 2,
+        desnutrido: 2,
+        agressivo: 2,
+        porte: 2,
+    },
+    {
+        nome: 'string4',
+        localEncontrado: 'string4',
+        ferido: 3,
+        desnutrido: 3,
+        agressivo: 3,
+        porte: 0,
+    },
+    {
+        nome: 'string5',
+        localEncontrado: 'string5',
+        ferido: 0,
+        desnutrido: 0,
+        agressivo: 0,
+        porte: 1,
     },
 ];
 // --- dbo.T_Clinica ---
-exports.clinicaMock = [
+exports.listaDeClinicas = [
     {
+        email: 'clinica1',
+        senha: 'senha1',
         clinicaId: 1,
-        nome: 'clinica1',
-        avaliacao: 3,
-        endereco: 'address1',
-        sobre: 'about1',
-        servicos: 'service1',
-        horarios: ["seg - sex", "sab - dom"],
-        pagamento: ["mastercard"],
-        avaliacaoCount: 3
+        nome: 'string1',
+        crmv: 'string1',
+        pontuacao: 0,
+        endereco: 'string1',
+        sobre: 'string1',
+        servicos: 'string1',
+        horarios: ['Seg. - Sex. das 8:00 - 17:00', 'Sáb. - Dom. das 12:00 - 17:00'],
+        pagamentos: ['Mastercard', 'Visa']
     },
     {
+        email: 'clinica2',
+        senha: 'senha2',
         clinicaId: 2,
-        nome: 'clinica2',
-        avaliacao: 2,
-        endereco: 'address2',
-        sobre: 'about2',
-        servicos: 'service2',
-        horarios: ["seg - sex", "sab - dom"],
-        pagamento: ["mastercard"],
-        avaliacaoCount: 3
+        nome: 'string2',
+        crmv: 'string2',
+        pontuacao: 1,
+        endereco: 'string2',
+        sobre: 'string2',
+        servicos: 'string2',
+        horarios: ['Seg. - Sex. das 8:00 - 17:00', 'Sáb. - Dom. das 12:00 - 17:00'],
+        pagamentos: ['Mastercard', 'Visa']
     },
     {
+        email: 'clinica3',
+        senha: 'senha3',
         clinicaId: 3,
-        nome: 'clinica3',
-        avaliacao: 2,
-        endereco: 'address3',
-        sobre: 'about3',
-        servicos: 'service3',
-        horarios: ["seg - sex", "sab - dom"],
-        pagamento: ["mastercard"],
-        avaliacaoCount: 5
+        nome: 'string3',
+        crmv: 'string3',
+        pontuacao: 2,
+        endereco: 'string3',
+        sobre: 'string3',
+        servicos: 'string3',
+        horarios: ['Seg. - Sex. das 8:00 - 17:00', 'Sáb. - Dom. das 12:00 - 17:00'],
+        pagamentos: ['Mastercard', 'Visa']
     },
     {
+        email: 'clinica4',
+        senha: 'senha4',
         clinicaId: 4,
-        nome: 'clinica4',
-        avaliacao: 1,
-        endereco: 'address4',
-        sobre: 'about4',
-        servicos: 'service4',
-        horarios: ["seg - sex", "sab - dom"],
-        pagamento: ["mastercard"],
-        avaliacaoCount: 1
+        nome: 'string4',
+        crmv: 'string4',
+        pontuacao: 3,
+        endereco: 'string4',
+        sobre: 'string4',
+        servicos: 'string4',
+        horarios: ['Seg. - Sex. das 8:00 - 17:00', 'Sáb. - Dom. das 12:00 - 17:00'],
+        pagamentos: ['Mastercard', 'Visa']
     },
     {
+        email: 'clinica5',
+        senha: 'senha5',
         clinicaId: 5,
-        nome: 'clinica5',
-        avaliacao: 2,
-        endereco: 'address5',
-        sobre: 'about5',
-        servicos: 'service5',
-        horarios: ["seg - sex", "sab - dom"],
-        pagamento: ["mastercard"],
-        avaliacaoCount: 2
-    },
+        nome: 'string5',
+        crmv: 'string5',
+        pontuacao: 4,
+        endereco: 'string5',
+        sobre: 'string5',
+        servicos: 'string5',
+        horarios: ['Seg. - Sex. das 8:00 - 17:00', 'Sáb. - Dom. das 12:00 - 17:00'],
+        pagamentos: ['Mastercard', 'Visa']
+    }
 ];
+// TODO: Implementar tabela de mock das consultas
 // Variável para simular o auto-incrementador de um banco de dados
-var maxUserId = 5;
+var maxUsuarioId = 5;
 var maxPetId = 5;
 var maxClinicaId = 5;
 // --- ENDPOINTS REFERENTES A USUARIO/LOGIN ----
@@ -203,316 +249,321 @@ var maxClinicaId = 5;
 // LOGIN
 // GET - http://localhost:3000/login
 var login = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var validatedLogin, userInfo, pets, error_1, yupError;
+    var usuario, clinica;
+    return __generator(this, function (_a) {
+        try {
+            usuario = exports.listaDeUsuarios.find(function (u) { return u.email === req.body.email && u.senha === req.body.senha; });
+            clinica = exports.listaDeClinicas.find(function (c) { return c.email === req.body.email && c.senha === req.body.senha; });
+            if (usuario) {
+                res.status(200).send(usuario);
+            }
+            else if (clinica) {
+                res.status(200).send(clinica);
+            }
+            else {
+                res.status(404).send("email ou senha incorretos");
+            }
+        }
+        catch (error) {
+            res.status(404).send(error.message);
+        }
+        return [2 /*return*/];
+    });
+}); };
+exports.login = login;
+// GET - http://localhost:3000/usuario
+var buscarUsuarios = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    return __generator(this, function (_a) {
+        res.status(200).send(exports.listaDeUsuarios);
+        return [2 /*return*/];
+    });
+}); };
+exports.buscarUsuarios = buscarUsuarios;
+// POST - http://localhost:3000/usuario
+var criarUsuario = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var requestBody, error_1, yupError;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                validatedLogin = undefined;
-                userInfo = undefined;
-                pets = undefined;
-                _a.label = 1;
+                _a.trys.push([0, 2, , 3]);
+                return [4 /*yield*/, usuario_1.usuarioBody.validate(req.body)];
             case 1:
-                _a.trys.push([1, 3, , 4]);
-                return [4 /*yield*/, login_1.loginBodyValidation.validate(req.body)];
+                requestBody = _a.sent();
+                if ((0, validarEmail_1.validarEmail)(requestBody.usuarioId, requestBody.email)) {
+                    maxUsuarioId += 1;
+                    requestBody.usuarioId = maxUsuarioId;
+                    exports.listaDeUsuarios.push(requestBody);
+                    return [2 /*return*/, res.status(201).send(requestBody)];
+                }
+                return [2 /*return*/, res.status(409).json({
+                        errors: "email já cadastrado, tente novamente",
+                    })];
             case 2:
-                validatedLogin = _a.sent();
-                userInfo = exports.userMock.find(function (user) {
-                    return user.email === validatedLogin.email &&
-                        user.password === validatedLogin.password;
-                });
-                pets = exports.petMock.filter(function (pet) { return pet.idUser === (userInfo === null || userInfo === void 0 ? void 0 : userInfo.userId); });
-                res.send({
-                    user: userInfo,
-                    pets: pets,
-                });
-                return [3 /*break*/, 4];
-            case 3:
                 error_1 = _a.sent();
                 yupError = error_1;
                 return [2 /*return*/, res.json({
                         errors: yupError.message,
                     })];
-            case 4: return [2 /*return*/];
+            case 3: return [2 /*return*/];
         }
     });
 }); };
-exports.login = login;
-// GET ALL USERS IF DONT HAVE USER ID OR GET USER BY USER ID
-// GET - http://localhost:3000/user/userId?
-var getUser = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var userId_1, users;
-    return __generator(this, function (_a) {
-        try {
-            userId_1 = parseInt(req.params.userId);
-            if (userId_1 > 0) {
-                users = undefined;
-                users = exports.userMock.filter(function (user) { return user.userId === userId_1; });
-                return [2 /*return*/, res.status(200).send(users)];
-            }
-            return [2 /*return*/, res.status(200).send(exports.userMock)];
-        }
-        catch (error) {
-            return [2 /*return*/, res.status(400).send(error)];
-        }
-        return [2 /*return*/];
-    });
-}); };
-exports.getUser = getUser;
-// POST USER
-// POST - http://localhost:3000/user
-var createUser = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var validatedUser, error_2, yupError;
+exports.criarUsuario = criarUsuario;
+// PUT - http://localhost:3000/usuario
+var atualizarUsuario = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var requestBody_1, usuario, error_2, yupError;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                validatedUser = undefined;
-                _a.label = 1;
+                _a.trys.push([0, 2, , 3]);
+                return [4 /*yield*/, usuario_1.usuarioBody.validate(req.body)];
             case 1:
-                _a.trys.push([1, 3, , 4]);
-                return [4 /*yield*/, user_1.userBodyValidation.validate(req.body)];
-            case 2:
-                validatedUser = _a.sent();
-                if ((0, login_1.loginIsValid)(validatedUser.email)) {
-                    maxUserId += 1;
-                    validatedUser.userId = maxUserId;
-                    exports.userMock.push(validatedUser);
-                    return [2 /*return*/, res.status(201).send(validatedUser)];
+                requestBody_1 = _a.sent();
+                usuario = exports.listaDeUsuarios.find(function (u) { return u.usuarioId === requestBody_1.usuarioId; });
+                if (usuario && (0, validarEmail_1.validarEmail)(requestBody_1.usuarioId, requestBody_1.email)) {
+                    // Removendo antigo registro
+                    exports.listaDeUsuarios = exports.listaDeUsuarios.filter(function (u) { return u.usuarioId !== requestBody_1.usuarioId; });
+                    exports.listaDeUsuarios.push(requestBody_1);
+                    return [2 /*return*/, res.status(200).send(requestBody_1)];
                 }
-                return [2 /*return*/, res.status(409).json({
-                        errors: "email já cadastrado, tente novamente",
-                    })];
-            case 3:
+                return [2 /*return*/, res.status(404).send("Inconsistencia nos dados, tente novamente")];
+            case 2:
                 error_2 = _a.sent();
                 yupError = error_2;
                 return [2 /*return*/, res.json({
                         errors: yupError.message,
                     })];
-            case 4: return [2 /*return*/];
+            case 3: return [2 /*return*/];
         }
     });
 }); };
-exports.createUser = createUser;
-// UPDATE USER
-// PUT - http://localhost:3000/user
-var updateUser = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var validatedUser, error_3, yupError;
+exports.atualizarUsuario = atualizarUsuario;
+// DELETE - http://localhost:3000/usuario/usuarioId
+var deletarUsuario = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var usuarioId_1, usuario_2;
+    return __generator(this, function (_a) {
+        try {
+            usuarioId_1 = parseInt(req.params.usuarioId);
+            usuario_2 = exports.listaDeUsuarios.find(function (u) { return u.usuarioId === usuarioId_1; });
+            if (usuario_2) {
+                exports.listaDeUsuarios = exports.listaDeUsuarios.filter(function (u) { return u.usuarioId !== usuario_2.usuarioId; });
+                exports.listaDePets = exports.listaDePets.filter(function (p) { return p.idUsuario !== usuarioId_1; });
+                return [2 /*return*/, res.status(204).send("Deletado com sucesso")];
+            }
+            return [2 /*return*/, res.status(404).send("usuário inexistente, tente novamente")];
+        }
+        catch (error) {
+            return [2 /*return*/, res.status(400).send(error)];
+        }
+        return [2 /*return*/];
+    });
+}); };
+exports.deletarUsuario = deletarUsuario;
+// --- ENDPOINTS REFERENTES A PET ----
+//
+// GET - http://localhost:3000/pet
+var buscarPets = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    return __generator(this, function (_a) {
+        res.status(200).send(exports.listaDePets);
+        return [2 /*return*/];
+    });
+}); };
+exports.buscarPets = buscarPets;
+// POST - http://localhost:3000/pet
+var criarPet = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var requestBody, error_3, yupError;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                validatedUser = undefined;
-                _a.label = 1;
+                _a.trys.push([0, 2, , 3]);
+                return [4 /*yield*/, pet_1.petBody.validate(req.body)];
             case 1:
-                _a.trys.push([1, 3, , 4]);
-                return [4 /*yield*/, user_1.userBodyValidation.validate(req.body)];
-            case 2:
-                validatedUser = _a.sent();
-                if ((0, user_1.userExists)(validatedUser.userId)) {
-                    // Removendo antigo registro
-                    exports.userMock = exports.userMock.filter(function (user) { return user.userId !== validatedUser.userId; });
-                    exports.userMock.push(validatedUser);
-                    return [2 /*return*/, res.status(200).send(validatedUser)];
+                requestBody = _a.sent();
+                if ((0, pet_1.petValido)(requestBody.idUsuario, requestBody.nome)) {
+                    maxPetId += 1;
+                    requestBody.petId = maxPetId;
+                    exports.listaDePets.push(requestBody);
+                    return [2 /*return*/, res.status(201).send(requestBody)];
                 }
-                return [2 /*return*/, res.status(404).send("Usuário inexistente, tente novamente")];
-            case 3:
+                return [2 /*return*/, res.status(409).json({
+                        errors: "pet já cadastrado, tente novamente",
+                    })];
+            case 2:
                 error_3 = _a.sent();
                 yupError = error_3;
                 return [2 /*return*/, res.json({
                         errors: yupError.message,
                     })];
-            case 4: return [2 /*return*/];
+            case 3: return [2 /*return*/];
         }
     });
 }); };
-exports.updateUser = updateUser;
-// DELETE USER
-// DELETE - http://localhost:3000/user/userId
-var deleteUser = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var userId_2, userInfo;
-    return __generator(this, function (_a) {
-        try {
-            userId_2 = parseInt(req.params.userId);
-            userInfo = exports.userMock.find(function (user) { return user.userId === userId_2; });
-            if (userInfo === undefined) {
-                return [2 /*return*/, res.status(404).send("usuário inexistente, tente novamente")];
-            }
-            exports.userMock = exports.userMock.filter(function (user) { return user.userId !== userId_2; });
-            exports.petMock = exports.petMock.filter(function (pet) { return pet.idUser !== userId_2; });
-            return [2 /*return*/, res.status(204).send("Deletado com sucesso")];
-        }
-        catch (error) {
-            return [2 /*return*/, res.status(400).send(error)];
-        }
-        return [2 /*return*/];
-    });
-}); };
-exports.deleteUser = deleteUser;
-// --- ENDPOINTS REFERENTES A PET ----
-//
-// GET ALL PETS IF DONT HAVE USER ID OR GET PETS BY USER ID
-// GET = http://localhost:3000/pet/userId?
-var getPet = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var userId_3, pets;
-    return __generator(this, function (_a) {
-        try {
-            userId_3 = parseInt(req.params.userId);
-            if (userId_3 > 0) {
-                pets = undefined;
-                pets = exports.petMock.filter(function (pet) { return pet.idUser === userId_3; });
-                return [2 /*return*/, res.status(200).send(pets)];
-            }
-            return [2 /*return*/, res.status(200).send(exports.petMock)];
-        }
-        catch (error) {
-            return [2 /*return*/, res.status(400).send(error)];
-        }
-        return [2 /*return*/];
-    });
-}); };
-exports.getPet = getPet;
-// POST PET
-// POST - http://localhost:3000/pet
-var postPet = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var validatedPet, error_4, yupError;
+exports.criarPet = criarPet;
+// PUT - http://localhost:3000/pet
+var atualizarPet = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var requestBody_2, pet_2, error_4, yupError;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                validatedPet = undefined;
-                _a.label = 1;
+                _a.trys.push([0, 2, , 3]);
+                return [4 /*yield*/, pet_1.petBody.validate(req.body)];
             case 1:
-                _a.trys.push([1, 3, , 4]);
-                return [4 /*yield*/, pet_1.petBodyValidation.validate(req.body)];
-            case 2:
-                validatedPet = _a.sent();
-                if ((0, pet_1.petIsvalid)(validatedPet.name, validatedPet.idUser)) {
-                    maxPetId += 1;
-                    validatedPet.petId = maxPetId;
-                    exports.petMock.push(validatedPet);
-                    return [2 /*return*/, res.status(201).send(validatedPet)];
+                requestBody_2 = _a.sent();
+                pet_2 = exports.listaDePets.find(function (p) { return p.petId === requestBody_2.petId; });
+                if (pet_2 && (0, pet_1.petValidoParaAtualizar)(requestBody_2.idUsuario, requestBody_2.petId, requestBody_2.nome)) {
+                    // Removendo antigo registro
+                    exports.listaDePets = exports.listaDePets.filter(function (p) { return p.petId !== pet_2.petId; });
+                    exports.listaDePets.push(requestBody_2);
+                    return [2 /*return*/, res.status(200).send(requestBody_2)];
                 }
-                return [2 /*return*/, res.status(409).json({
-                        errors: "nome de pet já cadastrado para este usuário ou usuário inválido, tente novamente",
-                    })];
-            case 3:
+                return [2 /*return*/, res.status(404).send("Inconsistencia nos dados, tente novamente")];
+            case 2:
                 error_4 = _a.sent();
                 yupError = error_4;
-                res.json({
-                    errors: yupError.message,
-                });
-                return [3 /*break*/, 4];
-            case 4: return [2 /*return*/];
+                return [2 /*return*/, res.json({
+                        errors: yupError.message,
+                    })];
+            case 3: return [2 /*return*/];
         }
     });
 }); };
-exports.postPet = postPet;
-// UPDATE PET
-// PUT - http://localhost:3000/pet
-var updatePet = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var validatedPet, error_5, yupError;
+exports.atualizarPet = atualizarPet;
+// DELETE - http://localhost:3000/pet/petId
+var deletarPet = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var petId_1, pet;
+    return __generator(this, function (_a) {
+        try {
+            petId_1 = parseInt(req.params.petId);
+            pet = exports.listaDePets.find(function (p) { return p.petId === petId_1; });
+            if (pet) {
+                exports.listaDePets = exports.listaDePets.filter(function (p) { return p.petId !== petId_1; });
+                return [2 /*return*/, res.status(204).send("Deletado com sucesso")];
+            }
+            return [2 /*return*/, res.status(404).send("pet inexistente, tente novamente")];
+        }
+        catch (error) {
+            return [2 /*return*/, res.status(400).send(error)];
+        }
+        return [2 /*return*/];
+    });
+}); };
+exports.deletarPet = deletarPet;
+// --- ENDPOINTS REFERENTES A PET DE RUA----
+//
+// GET - http://localhost:3000/petRua
+var buscarPetsRua = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    return __generator(this, function (_a) {
+        res.status(200).send(exports.listDePetsDeRua);
+        return [2 /*return*/];
+    });
+}); };
+exports.buscarPetsRua = buscarPetsRua;
+//POST - http://localhost:3000/petRua
+var criarPetRua = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var requestBody, error_5, yupError;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                validatedPet = undefined;
-                _a.label = 1;
+                _a.trys.push([0, 2, , 3]);
+                return [4 /*yield*/, petRua_1.petRuaBody.validate(req.body)];
             case 1:
-                _a.trys.push([1, 3, , 4]);
-                return [4 /*yield*/, pet_1.petBodyValidation.validate(req.body)];
+                requestBody = _a.sent();
+                exports.listDePetsDeRua.push(requestBody);
+                return [2 /*return*/, res.status(201).send(requestBody)];
             case 2:
-                validatedPet = _a.sent();
-                if ((0, pet_1.petExists)(validatedPet.petId)) {
-                    // Removendo antigo registro
-                    exports.petMock = exports.petMock.filter(function (pet) { return pet.petId !== validatedPet.petId; });
-                    exports.petMock.push(validatedPet);
-                    return [2 /*return*/, res.status(200).send(validatedPet)];
-                }
-                return [2 /*return*/, res.status(404).send("Pet inexistente, tente novamente")];
-            case 3:
                 error_5 = _a.sent();
                 yupError = error_5;
                 return [2 /*return*/, res.json({
                         errors: yupError.message,
                     })];
-            case 4: return [2 /*return*/];
+            case 3: return [2 /*return*/];
         }
     });
 }); };
-exports.updatePet = updatePet;
-// DELETE PET
-// DELETE - http://localhost:3000/pet/petId
-var deletePet = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var petId_1, petInfo;
-    return __generator(this, function (_a) {
-        try {
-            petId_1 = parseInt(req.params.petId);
-            petInfo = exports.petMock.find(function (pet) { return pet.petId === petId_1; });
-            if (petInfo === undefined) {
-                return [2 /*return*/, res.status(404).send("pet inexistente, tente novamente")];
-            }
-            exports.petMock = exports.petMock.filter(function (pet) { return pet.petId !== petId_1; });
-            return [2 /*return*/, res.status(204).send("Deletado com sucesso")];
-        }
-        catch (error) {
-            return [2 /*return*/, res.status(400).send(error)];
-        }
-        return [2 /*return*/];
-    });
-}); };
-exports.deletePet = deletePet;
-// --- ENDPOINTS REFERENTES A CLINICA ----
+exports.criarPetRua = criarPetRua;
+// --- ENDPOINTS REFERENTES A CLINICA----
 //
-// GET ALL CLINICAS IF DONT HAVE CLINICA ID OR GET CLINICA BY CLINICA ID 
-// GET - http://localhost:3000/clinica/clinicaId?
-var getClinica = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var clinicaId_1, clinicas;
+// GET - http://localhost:3000/clinica
+var buscarClinicas = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
-        try {
-            clinicaId_1 = parseInt(req.params.clinicaId);
-            if (clinicaId_1 > 0) {
-                clinicas = undefined;
-                clinicas = exports.clinicaMock.filter(function (clinica) { return clinica.clinicaId === clinicaId_1; });
-                return [2 /*return*/, res.status(200).send(clinicas)];
-            }
-            return [2 /*return*/, res.status(200).send(exports.clinicaMock)];
-        }
-        catch (error) {
-            return [2 /*return*/, res.status(400).send(error)];
-        }
-        return [2 /*return*/];
+        return [2 /*return*/, res.status(200).send(exports.listaDeClinicas)];
     });
 }); };
-exports.getClinica = getClinica;
-// POST CLINICA
+exports.buscarClinicas = buscarClinicas;
 // POST - http://localhost:3000/clinica
-var postClinica = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var validatedClinica, error_6, yupError;
+var criarClinica = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var requestBody, error_6, yupError;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                validatedClinica = undefined;
-                _a.label = 1;
+                _a.trys.push([0, 2, , 3]);
+                return [4 /*yield*/, clinica_1.clinicaBody.validate(req.body)];
             case 1:
-                _a.trys.push([1, 3, , 4]);
-                return [4 /*yield*/, clinica_1.clinicaBodyValidation.validate(req.body)];
-            case 2:
-                validatedClinica = _a.sent();
-                if ((0, clinica_1.clinicaIsvalid)(validatedClinica.nome)) {
+                requestBody = _a.sent();
+                if ((0, validarEmail_1.validarEmail)(requestBody.clinicaId, requestBody.email)) {
                     maxClinicaId += 1;
-                    validatedClinica.clinicaId = maxClinicaId;
-                    exports.clinicaMock.push(validatedClinica);
-                    return [2 /*return*/, res.status(201).send(validatedClinica)];
+                    requestBody.clinicaId = maxClinicaId;
+                    exports.listaDeClinicas.push(requestBody);
+                    return [2 /*return*/, res.status(201).send(requestBody)];
                 }
                 return [2 /*return*/, res.status(409).json({
-                        errors: "nome de clinica já cadastrada, tente novamente",
+                        errors: "email já cadastrado, tente novamente",
                     })];
-            case 3:
+            case 2:
                 error_6 = _a.sent();
                 yupError = error_6;
-                res.json({
-                    errors: yupError.message,
-                });
-                return [3 /*break*/, 4];
-            case 4: return [2 /*return*/];
+                return [2 /*return*/, res.json({
+                        errors: yupError.message,
+                    })];
+            case 3: return [2 /*return*/];
         }
     });
 }); };
-exports.postClinica = postClinica;
+exports.criarClinica = criarClinica;
+var atualizarClinica = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var requestBody_3, error_7, yupError;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 2, , 3]);
+                return [4 /*yield*/, clinica_1.clinicaBody.validate(req.body)];
+            case 1:
+                requestBody_3 = _a.sent();
+                if (requestBody_3 && (0, validarEmail_1.validarEmail)(requestBody_3.clinicaId, requestBody_3.email)) {
+                    exports.listaDeClinicas = exports.listaDeClinicas.filter(function (c) { return c.clinicaId !== requestBody_3.clinicaId; });
+                    exports.listaDeClinicas.push(requestBody_3);
+                    return [2 /*return*/, res.status(200).send(requestBody_3)];
+                }
+                return [2 /*return*/, res.status(404).send("Inconsistencia nos dados, tente novamente")];
+            case 2:
+                error_7 = _a.sent();
+                yupError = error_7;
+                return [2 /*return*/, res.json({
+                        errors: yupError.message,
+                    })];
+            case 3: return [2 /*return*/];
+        }
+    });
+}); };
+exports.atualizarClinica = atualizarClinica;
+var deletarClinica = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var clinicaId_1, clinica;
+    return __generator(this, function (_a) {
+        try {
+            clinicaId_1 = parseInt(req.params.clinicaId);
+            clinica = exports.listaDeClinicas.find(function (c) { return c.clinicaId === clinicaId_1; });
+            if (clinica) {
+                exports.listaDeClinicas = exports.listaDeClinicas.filter(function (c) { return c.clinicaId !== clinicaId_1; });
+                return [2 /*return*/, res.status(204).send("Deletado com sucesso")];
+            }
+            return [2 /*return*/, res.status(404).send("clinica inexistente, tente novamente")];
+        }
+        catch (error) {
+            return [2 /*return*/, res.status(400).send(error)];
+        }
+        return [2 /*return*/];
+    });
+}); };
+exports.deletarClinica = deletarClinica;
+// TODO: Implementar metodos da consulta
 //# sourceMappingURL=index.js.map

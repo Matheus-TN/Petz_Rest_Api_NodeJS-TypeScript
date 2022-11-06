@@ -23,19 +23,13 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.userExists = exports.userBodyValidation = void 0;
-var controllers_1 = require("../controllers");
+exports.usuarioBody = void 0;
 var yup = __importStar(require("yup"));
-exports.userBodyValidation = yup.object().shape({
-    userId: yup.number().positive().min(0),
-    name: yup.string().required().min(1),
+exports.usuarioBody = yup.object().shape({
     email: yup.string().required().min(1),
-    password: yup.string().required().min(1),
-    crmv: yup.string(),
-    address: yup.string(),
+    senha: yup.string().required().min(1),
+    usuarioId: yup.number(),
+    nome: yup.string().required(),
+    endereco: yup.string()
 });
-var userExists = function (userId) {
-    return controllers_1.userMock.find(function (user) { return user.userId === userId; }) !== undefined;
-};
-exports.userExists = userExists;
-//# sourceMappingURL=user.js.map
+//# sourceMappingURL=usuario.js.map

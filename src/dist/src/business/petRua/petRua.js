@@ -23,22 +23,15 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.clinicaIsvalid = exports.clinicaBodyValidation = void 0;
-var controllers_1 = require("../controllers");
+exports.petRuaBody = void 0;
 var yup = __importStar(require("yup"));
-exports.clinicaBodyValidation = yup.object().shape({
-    clinicaId: yup.number().positive().min(0),
-    nome: yup.string().required().min(1),
-    avaliacao: yup.number().required().positive().min(0),
-    endereco: yup.string().required().min(1),
-    sobre: yup.string().min(0),
-    servicos: yup.string().min(0),
-    horarios: yup.array().required().min(1),
-    pagamento: yup.array().required().min(1),
-    avaliacaoCount: yup.number()
+exports.petRuaBody = yup.object().shape({
+    nome: yup.string().required(),
+    localEncontrado: yup.string(),
+    ferido: yup.number().required().min(0).max(4),
+    desnutrido: yup.number().required().min(0).max(4),
+    agressivo: yup.number().required().min(0).max(4),
+    porte: yup.number().required().min(0).max(2),
+    observacoes: yup.string()
 });
-var clinicaIsvalid = function (nome) {
-    return controllers_1.clinicaMock.find(function (clinica) { return clinica.nome === nome; }) === undefined;
-};
-exports.clinicaIsvalid = clinicaIsvalid;
-//# sourceMappingURL=clinica.js.map
+//# sourceMappingURL=petRua.js.map

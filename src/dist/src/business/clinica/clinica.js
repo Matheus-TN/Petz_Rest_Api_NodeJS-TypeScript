@@ -23,15 +23,24 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.loginIsValid = exports.loginBodyValidation = void 0;
-var controllers_1 = require("../controllers");
+exports.clinicaValido = exports.clinicaBody = void 0;
 var yup = __importStar(require("yup"));
-exports.loginBodyValidation = yup.object().shape({
+var controllers_1 = require("../../controllers");
+exports.clinicaBody = yup.object().shape({
     email: yup.string().required().min(1),
-    password: yup.string().required().min(1),
+    senha: yup.string().required().min(1),
+    clinicaId: yup.number(),
+    nome: yup.string().required(),
+    crmv: yup.string().required(),
+    pontuacao: yup.number().required().min(0).max(5),
+    endereco: yup.string().required(),
+    sobre: yup.string(),
+    servicos: yup.string(),
+    horarios: yup.array().required(),
+    pagamentos: yup.array().required()
 });
-var loginIsValid = function (email) {
-    return controllers_1.userMock.find(function (user) { return user.email === email; }) === undefined;
+var clinicaValido = function (clinicaId, nome, crmv) {
+    return controllers_1.listaDeClinicas.find(function (c) { return c.clinicaId !== clinicaId && (c.nome === nome || c.crmv === crmv); }) === undefined;
 };
-exports.loginIsValid = loginIsValid;
-//# sourceMappingURL=login.js.map
+exports.clinicaValido = clinicaValido;
+//# sourceMappingURL=clinica.js.map
