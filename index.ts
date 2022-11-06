@@ -1,16 +1,20 @@
 import express from "express";
 import {
   login,
-  getUser,
-  createUser,
-  updateUser,
-  deleteUser,
-  getPet,
-  postPet,
-  updatePet,
-  deletePet,
-  getClinica,
-  postClinica
+  buscarUsuarios,
+  criarUsuario,
+  atualizarUsuario,
+  deletarUsuario,
+  buscarPets,
+  criarPet,
+  atualizarPet,
+  deletarPet,
+  buscarPetsRua,
+  criarPetRua,
+  buscarClinicas,
+  criarClinica,
+  atualizarClinica,
+  deletarClinica
 } from "./src/controllers";
 
 const cors = require("cors");
@@ -22,18 +26,23 @@ app.use(express.json());
 
 app.get("/login", login);
 
-app.get("/user/:userId?", getUser);
-app.post("/user", createUser);
-app.put("/user", updateUser);
-app.delete("/user/:userId", deleteUser);
+app.get("/usuario", buscarUsuarios);
+app.post("/usuario", criarUsuario);
+app.put("/usuario", atualizarUsuario);
+app.delete("/usuario/:usuarioId", deletarUsuario);
 
-app.get("/pet/:userId?", getPet);
-app.post("/pet", postPet);
-app.put("/pet", updatePet);
-app.delete("/pet/:petId", deletePet);
+app.get("/pet", buscarPets);
+app.post("/pet", criarPet);
+app.put("/pet", atualizarPet);
+app.delete("/pet/:petId", deletarPet);
 
-app.get("/clinica/:clinicaId?", getClinica),
-app.post("/clinica", postClinica),
+app.get("/petRua", buscarPetsRua),
+app.post("/petRua", criarPetRua)
+
+app.get("/clinica", buscarClinicas),
+app.post("/clinica", criarClinica),
+app.put("/clinica", atualizarClinica),
+app.delete("/clinica/:clinicaId", deletarClinica)
 
 app.listen(process.env["PORT"] || 3000, function () {
   console.log(`listening on ${process.env.PORT}`);
