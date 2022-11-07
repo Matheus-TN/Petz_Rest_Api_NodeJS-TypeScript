@@ -14,7 +14,11 @@ import {
   buscarClinicas,
   criarClinica,
   atualizarClinica,
-  deletarClinica
+  deletarClinica,
+  buscarConsultas,
+  criarConsulta,
+  atualizarConsulta,
+  deletarConsulta
 } from "./src/controllers";
 
 const cors = require("cors");
@@ -36,13 +40,18 @@ app.post("/pet", criarPet);
 app.put("/pet", atualizarPet);
 app.delete("/pet/:petId", deletarPet);
 
-app.get("/petRua", buscarPetsRua),
-app.post("/petRua", criarPetRua)
+app.get("/petRua", buscarPetsRua);
+app.post("/petRua", criarPetRua);
 
-app.get("/clinica", buscarClinicas),
-app.post("/clinica", criarClinica),
-app.put("/clinica", atualizarClinica),
-app.delete("/clinica/:clinicaId", deletarClinica)
+app.get("/clinica", buscarClinicas);
+app.post("/clinica", criarClinica);
+app.put("/clinica", atualizarClinica);
+app.delete("/clinica/:clinicaId", deletarClinica);
+
+app.get("/consulta", buscarConsultas);
+app.post("/consulta", criarConsulta);
+app.put("/consulta", atualizarConsulta);
+app.delete("/consulta/:consultaId", deletarConsulta)
 
 app.listen(process.env["PORT"] || 3000, function () {
   console.log(`listening on ${process.env.PORT}`);

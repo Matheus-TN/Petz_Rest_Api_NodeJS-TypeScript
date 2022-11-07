@@ -1,11 +1,13 @@
 import { Request, Response } from "express";
 import * as yup from "yup";
 import { clinicaBody, clinicaValido } from "../business/clinica/clinica";
+import { consultaBody, consultaValida } from "../business/consulta/consulta";
 import { petBody, petValido, petValidoParaAtualizar } from "../business/pet/pet";
 import { petRuaBody } from "../business/petRua/petRua";
 import { usuarioBody } from "../business/usuario/usuario";
 import { validarEmail } from "../business/validarEmail";
 import IClinica from "../models/clinica/clinica";
+import IConsulta from "../models/consulta/consulta";
 import ILogin from "../models/login/login";
 import IPet from "../models/pet/pet";
 import IPetRua from "../models/petRua/petRua";
@@ -212,12 +214,49 @@ export let listaDeClinicas: IClinica[] = [
   }
 ]
 
-// TODO: Implementar tabela de mock das consultas
+export let listaDeConsultas: IConsulta[] = [
+  {
+    consultaId: 1,
+    idPet: 1,
+    idClinica: 1,
+    data: new Date(2022, 1, 1, 12, 0),
+    ativo: true
+  },
+  {
+    consultaId: 2,
+    idPet: 2,
+    idClinica: 2,
+    data: new Date(2022, 1, 2, 13, 0),
+    ativo: true
+  },
+  {
+    consultaId: 3,
+    idPet: 3,
+    idClinica: 3,
+    data: new Date(2022, 1, 3, 14, 0),
+    ativo: true
+  },
+  {
+    consultaId: 4,
+    idPet: 4,
+    idClinica: 4,
+    data: new Date(2022, 1, 4, 15, 0),
+    ativo: true
+  },
+  {
+    consultaId: 5,
+    idPet: 5,
+    idClinica: 5,
+    data: new Date(2022, 1, 4, 16, 0),
+    ativo: true
+  }
+] 
 
 // Variável para simular o auto-incrementador de um banco de dados
 let maxUsuarioId: number = 5;
 let maxPetId: number = 5;
 let maxClinicaId: number = 5;
+let maxConsultaId: number = 5;
 
 // --- ENDPOINTS REFERENTES A USUARIO/LOGIN ----
 //
@@ -263,9 +302,7 @@ export const criarUsuario = async (req: Request<{}, {}, IUsuario>, res: Response
       return res.status(201).send(requestBody);
     }
 
-    return res.status(409).json({
-      errors: "email já cadastrado, tente novamente",
-    });
+    return res.status(409).send("Email já cadastrado, tente novamente");
   } catch (error) {
     const yupError = error as yup.ValidationError;
 
@@ -289,7 +326,7 @@ export const atualizarUsuario = async (req: Request<{}, {}, IUsuario>, res: Resp
       return res.status(200).send(requestBody);
     }
 
-    return res.status(404).send("Inconsistencia nos dados, tente novamente");
+    return res.status(404).send("Inconsistência nos dados, tente novamente");
   } catch (error) {
     const yupError = error as yup.ValidationError;
 
@@ -312,7 +349,7 @@ export const deletarUsuario = async (req: Request, res: Response) => {
       return res.status(204).send("Deletado com sucesso");
     }
 
-    return res.status(404).send("usuário inexistente, tente novamente");
+    return res.status(404).send("Usuário inexistente, tente novamente");
   } catch (error) {
     return res.status(400).send(error);
   }
@@ -341,7 +378,7 @@ export const criarPet = async (req: Request<{}, {}, IPet>, res: Response) => {
     }
 
     return res.status(409).json({
-      errors: "pet já cadastrado, tente novamente",
+      errors: "Pet já cadastrado, tente novamente",
     });
   } catch (error) {
     const yupError = error as yup.ValidationError;
@@ -366,7 +403,7 @@ export const atualizarPet = async (req: Request<{}, {}, IPet>, res: Response) =>
       return res.status(200).send(requestBody);
     }
 
-    return res.status(404).send("Inconsistencia nos dados, tente novamente");
+    return res.status(404).send("Inconsistência nos dados, tente novamente");
   } catch (error) {
     const yupError = error as yup.ValidationError;
 
@@ -388,7 +425,7 @@ export const deletarPet = async (req: Request, res: Response) => {
       return res.status(204).send("Deletado com sucesso");
     }
 
-    return res.status(404).send("pet inexistente, tente novamente");
+    return res.status(404).send("Pet inexistente, tente novamente");
   } catch (error) {
     return res.status(400).send(error);
   }
@@ -441,9 +478,7 @@ export const criarClinica = async(req: Request<{}, {}, IClinica>, res: Response)
       return res.status(201).send(requestBody);
     }
 
-    return res.status(409).json({
-      errors: "email já cadastrado, tente novamente",
-    });
+    return res.status(409).send("Email já cadastrado, tente novamente");
   }
   catch(error){
     const yupError = error as yup.ValidationError;
@@ -465,7 +500,7 @@ export const atualizarClinica = async (req: Request<{}, {}, IClinica>, res: Resp
       return res.status(200).send(requestBody);
     }
 
-    return res.status(404).send("Inconsistencia nos dados, tente novamente");
+    return res.status(404).send("Inconsistência nos dados, tente novamente");
   }
   catch(error){
     const yupError = error as yup.ValidationError;
@@ -487,10 +522,90 @@ export const deletarClinica = async (req: Request, res: Response) => {
       return res.status(204).send("Deletado com sucesso");
     }
 
-    return res.status(404).send("clinica inexistente, tente novamente");
+    return res.status(404).send("Clínica inexistente, tente novamente");
   } catch (error) {
     return res.status(400).send(error);
   }
 };
 
-// TODO: Implementar metodos da consulta
+// --- ENDPOINTS REFERENTES A CONSULTA----
+//
+// GET - http://localhost:3000/consulta
+export const buscarConsultas = async (req: Request, res: Response) => {
+  return res.status(200).send(listaDeConsultas);
+}
+
+// POST - http://localhost:3000/consulta
+export const criarConsulta = async (req: Request<{}, {}, IConsulta>, res: Response) => {
+  try{
+    const requestBody: IConsulta | undefined = await consultaBody.validate(req.body);
+
+    const pet = listaDePets.find(p => p.petId === requestBody.idPet)
+    const clinica = listaDeClinicas.find(c => c.clinicaId === requestBody.idClinica)
+
+    if(pet && clinica && consultaValida(requestBody.idClinica, requestBody.data)){
+      maxConsultaId += 1;
+
+      requestBody.consultaId = maxConsultaId;
+
+      listaDeConsultas.push(requestBody);
+
+      return res.status(201).send(requestBody)
+    }
+
+    return res.status(404).send("Inconsistência inexistente, tente novamente")
+  }
+  catch(error){
+    const yupError = error as yup.ValidationError;
+
+    return res.json({
+      errors: yupError.message,
+    });
+  }
+}
+
+// PUT - http://localhost:3000/consulta
+export const atualizarConsulta = async (req: Request<{}, {}, IConsulta>, res: Response) => {
+  try{
+    const requestBody: IConsulta | undefined = await consultaBody.validate(req.body);
+
+    const consulta = listaDeConsultas.find(c => c.consultaId === requestBody.consultaId)
+    const pet = listaDePets.find(p => p.petId === requestBody.idPet)
+    const clinica = listaDeClinicas.find(c => c.clinicaId === requestBody.idClinica)
+
+    if(consulta && pet && clinica && consultaValida(requestBody.idClinica, requestBody.data)){
+      listaDeConsultas = listaDeConsultas.filter(c => c.consultaId !== consulta.consultaId)
+      listaDeConsultas.push(requestBody);
+
+      return res.status(200).send(requestBody)
+    }
+
+    return res.status(404).send("Inconsistência inexistente, tente novamente")
+  }
+  catch(error){
+    const yupError = error as yup.ValidationError;
+
+    return res.json({
+      errors: yupError.message,
+    });
+  }
+}
+
+// DELETE - http://localhost:3000/consulta
+export const deletarConsulta = async (req: Request, res: Response) => {
+  try{
+    const consultaId: number | undefined = parseInt(req.params.consultaId);
+    const consulta: IConsulta | undefined = listaDeConsultas.find(c => c.consultaId === consultaId);
+
+    if(consulta){
+      listaDeConsultas = listaDeConsultas.filter(c => c.consultaId !== consultaId)
+
+      return res.status(200).send("Deletado com sucesso")
+    }
+
+    return res.status(404).send("Clínica inexistente, tente novamente");
+  }
+  catch(error){
+    return res.status(400).send(error);
+  }
+}

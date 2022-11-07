@@ -18,12 +18,16 @@ app.get("/pet", controllers_1.buscarPets);
 app.post("/pet", controllers_1.criarPet);
 app.put("/pet", controllers_1.atualizarPet);
 app.delete("/pet/:petId", controllers_1.deletarPet);
-app.get("/petRua", controllers_1.buscarPetsRua),
-    app.post("/petRua", controllers_1.criarPetRua);
-app.get("/clinica", controllers_1.buscarClinicas),
-    app.post("/clinica", controllers_1.criarClinica),
-    app.put("/clinica", controllers_1.atualizarClinica),
-    app.delete("/clinica/:clinicaId", controllers_1.deletarClinica);
+app.get("/petRua", controllers_1.buscarPetsRua);
+app.post("/petRua", controllers_1.criarPetRua);
+app.get("/clinica", controllers_1.buscarClinicas);
+app.post("/clinica", controllers_1.criarClinica);
+app.put("/clinica", controllers_1.atualizarClinica);
+app.delete("/clinica/:clinicaId", controllers_1.deletarClinica);
+app.get("/consulta", controllers_1.buscarConsultas);
+app.post("/consulta", controllers_1.criarConsulta);
+app.put("/consulta", controllers_1.atualizarConsulta);
+app.delete("/consulta/:consultaId", controllers_1.deletarConsulta);
 app.listen(process.env["PORT"] || 3000, function () {
     console.log("listening on ".concat(process.env.PORT));
 });

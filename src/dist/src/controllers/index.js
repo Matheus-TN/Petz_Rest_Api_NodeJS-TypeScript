@@ -36,8 +36,9 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deletarClinica = exports.atualizarClinica = exports.criarClinica = exports.buscarClinicas = exports.criarPetRua = exports.buscarPetsRua = exports.deletarPet = exports.atualizarPet = exports.criarPet = exports.buscarPets = exports.deletarUsuario = exports.atualizarUsuario = exports.criarUsuario = exports.buscarUsuarios = exports.login = exports.listaDeClinicas = exports.listDePetsDeRua = exports.listaDePets = exports.listaDeUsuarios = void 0;
+exports.deletarConsulta = exports.atualizarConsulta = exports.criarConsulta = exports.buscarConsultas = exports.deletarClinica = exports.atualizarClinica = exports.criarClinica = exports.buscarClinicas = exports.criarPetRua = exports.buscarPetsRua = exports.deletarPet = exports.atualizarPet = exports.criarPet = exports.buscarPets = exports.deletarUsuario = exports.atualizarUsuario = exports.criarUsuario = exports.buscarUsuarios = exports.login = exports.listaDeConsultas = exports.listaDeClinicas = exports.listDePetsDeRua = exports.listaDePets = exports.listaDeUsuarios = void 0;
 var clinica_1 = require("../business/clinica/clinica");
+var consulta_1 = require("../business/consulta/consulta");
 var pet_1 = require("../business/pet/pet");
 var petRua_1 = require("../business/petRua/petRua");
 var usuario_1 = require("../business/usuario/usuario");
@@ -239,11 +240,48 @@ exports.listaDeClinicas = [
         pagamentos: ['Mastercard', 'Visa']
     }
 ];
-// TODO: Implementar tabela de mock das consultas
+exports.listaDeConsultas = [
+    {
+        consultaId: 1,
+        idPet: 1,
+        idClinica: 1,
+        data: new Date(2022, 1, 1, 12, 0),
+        ativo: true
+    },
+    {
+        consultaId: 2,
+        idPet: 2,
+        idClinica: 2,
+        data: new Date(2022, 1, 2, 13, 0),
+        ativo: true
+    },
+    {
+        consultaId: 3,
+        idPet: 3,
+        idClinica: 3,
+        data: new Date(2022, 1, 3, 14, 0),
+        ativo: true
+    },
+    {
+        consultaId: 4,
+        idPet: 4,
+        idClinica: 4,
+        data: new Date(2022, 1, 4, 15, 0),
+        ativo: true
+    },
+    {
+        consultaId: 5,
+        idPet: 5,
+        idClinica: 5,
+        data: new Date(2022, 1, 4, 16, 0),
+        ativo: true
+    }
+];
 // Variável para simular o auto-incrementador de um banco de dados
 var maxUsuarioId = 5;
 var maxPetId = 5;
 var maxClinicaId = 5;
+var maxConsultaId = 5;
 // --- ENDPOINTS REFERENTES A USUARIO/LOGIN ----
 //
 // LOGIN
@@ -295,9 +333,7 @@ var criarUsuario = function (req, res) { return __awaiter(void 0, void 0, void 0
                     exports.listaDeUsuarios.push(requestBody);
                     return [2 /*return*/, res.status(201).send(requestBody)];
                 }
-                return [2 /*return*/, res.status(409).json({
-                        errors: "email já cadastrado, tente novamente",
-                    })];
+                return [2 /*return*/, res.status(409).send("Email já cadastrado, tente novamente")];
             case 2:
                 error_1 = _a.sent();
                 yupError = error_1;
@@ -326,7 +362,7 @@ var atualizarUsuario = function (req, res) { return __awaiter(void 0, void 0, vo
                     exports.listaDeUsuarios.push(requestBody_1);
                     return [2 /*return*/, res.status(200).send(requestBody_1)];
                 }
-                return [2 /*return*/, res.status(404).send("Inconsistencia nos dados, tente novamente")];
+                return [2 /*return*/, res.status(404).send("Inconsistência nos dados, tente novamente")];
             case 2:
                 error_2 = _a.sent();
                 yupError = error_2;
@@ -350,7 +386,7 @@ var deletarUsuario = function (req, res) { return __awaiter(void 0, void 0, void
                 exports.listaDePets = exports.listaDePets.filter(function (p) { return p.idUsuario !== usuarioId_1; });
                 return [2 /*return*/, res.status(204).send("Deletado com sucesso")];
             }
-            return [2 /*return*/, res.status(404).send("usuário inexistente, tente novamente")];
+            return [2 /*return*/, res.status(404).send("Usuário inexistente, tente novamente")];
         }
         catch (error) {
             return [2 /*return*/, res.status(400).send(error)];
@@ -386,7 +422,7 @@ var criarPet = function (req, res) { return __awaiter(void 0, void 0, void 0, fu
                     return [2 /*return*/, res.status(201).send(requestBody)];
                 }
                 return [2 /*return*/, res.status(409).json({
-                        errors: "pet já cadastrado, tente novamente",
+                        errors: "Pet já cadastrado, tente novamente",
                     })];
             case 2:
                 error_3 = _a.sent();
@@ -416,7 +452,7 @@ var atualizarPet = function (req, res) { return __awaiter(void 0, void 0, void 0
                     exports.listaDePets.push(requestBody_2);
                     return [2 /*return*/, res.status(200).send(requestBody_2)];
                 }
-                return [2 /*return*/, res.status(404).send("Inconsistencia nos dados, tente novamente")];
+                return [2 /*return*/, res.status(404).send("Inconsistência nos dados, tente novamente")];
             case 2:
                 error_4 = _a.sent();
                 yupError = error_4;
@@ -439,7 +475,7 @@ var deletarPet = function (req, res) { return __awaiter(void 0, void 0, void 0, 
                 exports.listaDePets = exports.listaDePets.filter(function (p) { return p.petId !== petId_1; });
                 return [2 /*return*/, res.status(204).send("Deletado com sucesso")];
             }
-            return [2 /*return*/, res.status(404).send("pet inexistente, tente novamente")];
+            return [2 /*return*/, res.status(404).send("Pet inexistente, tente novamente")];
         }
         catch (error) {
             return [2 /*return*/, res.status(400).send(error)];
@@ -506,9 +542,7 @@ var criarClinica = function (req, res) { return __awaiter(void 0, void 0, void 0
                     exports.listaDeClinicas.push(requestBody);
                     return [2 /*return*/, res.status(201).send(requestBody)];
                 }
-                return [2 /*return*/, res.status(409).json({
-                        errors: "email já cadastrado, tente novamente",
-                    })];
+                return [2 /*return*/, res.status(409).send("Email já cadastrado, tente novamente")];
             case 2:
                 error_6 = _a.sent();
                 yupError = error_6;
@@ -534,7 +568,7 @@ var atualizarClinica = function (req, res) { return __awaiter(void 0, void 0, vo
                     exports.listaDeClinicas.push(requestBody_3);
                     return [2 /*return*/, res.status(200).send(requestBody_3)];
                 }
-                return [2 /*return*/, res.status(404).send("Inconsistencia nos dados, tente novamente")];
+                return [2 /*return*/, res.status(404).send("Inconsistência nos dados, tente novamente")];
             case 2:
                 error_7 = _a.sent();
                 yupError = error_7;
@@ -556,7 +590,7 @@ var deletarClinica = function (req, res) { return __awaiter(void 0, void 0, void
                 exports.listaDeClinicas = exports.listaDeClinicas.filter(function (c) { return c.clinicaId !== clinicaId_1; });
                 return [2 /*return*/, res.status(204).send("Deletado com sucesso")];
             }
-            return [2 /*return*/, res.status(404).send("clinica inexistente, tente novamente")];
+            return [2 /*return*/, res.status(404).send("Clínica inexistente, tente novamente")];
         }
         catch (error) {
             return [2 /*return*/, res.status(400).send(error)];
@@ -565,5 +599,93 @@ var deletarClinica = function (req, res) { return __awaiter(void 0, void 0, void
     });
 }); };
 exports.deletarClinica = deletarClinica;
-// TODO: Implementar metodos da consulta
+// --- ENDPOINTS REFERENTES A CONSULTA----
+//
+// GET - http://localhost:3000/consulta
+var buscarConsultas = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    return __generator(this, function (_a) {
+        return [2 /*return*/, res.status(200).send(exports.listaDeConsultas)];
+    });
+}); };
+exports.buscarConsultas = buscarConsultas;
+// POST - http://localhost:3000/consulta
+var criarConsulta = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var requestBody_4, pet, clinica, error_8, yupError;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 2, , 3]);
+                return [4 /*yield*/, consulta_1.consultaBody.validate(req.body)];
+            case 1:
+                requestBody_4 = _a.sent();
+                pet = exports.listaDePets.find(function (p) { return p.petId === requestBody_4.idPet; });
+                clinica = exports.listaDeClinicas.find(function (c) { return c.clinicaId === requestBody_4.idClinica; });
+                if (pet && clinica && (0, consulta_1.consultaValida)(requestBody_4.idClinica, requestBody_4.data)) {
+                    maxConsultaId += 1;
+                    requestBody_4.consultaId = maxConsultaId;
+                    exports.listaDeConsultas.push(requestBody_4);
+                    return [2 /*return*/, res.status(201).send(requestBody_4)];
+                }
+                return [2 /*return*/, res.status(404).send("Inconsistência inexistente, tente novamente")];
+            case 2:
+                error_8 = _a.sent();
+                yupError = error_8;
+                return [2 /*return*/, res.json({
+                        errors: yupError.message,
+                    })];
+            case 3: return [2 /*return*/];
+        }
+    });
+}); };
+exports.criarConsulta = criarConsulta;
+// PUT - http://localhost:3000/consulta
+var atualizarConsulta = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var requestBody_5, consulta_2, pet, clinica, error_9, yupError;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 2, , 3]);
+                return [4 /*yield*/, consulta_1.consultaBody.validate(req.body)];
+            case 1:
+                requestBody_5 = _a.sent();
+                consulta_2 = exports.listaDeConsultas.find(function (c) { return c.consultaId === requestBody_5.consultaId; });
+                pet = exports.listaDePets.find(function (p) { return p.petId === requestBody_5.idPet; });
+                clinica = exports.listaDeClinicas.find(function (c) { return c.clinicaId === requestBody_5.idClinica; });
+                if (consulta_2 && pet && clinica && (0, consulta_1.consultaValida)(requestBody_5.idClinica, requestBody_5.data)) {
+                    exports.listaDeConsultas = exports.listaDeConsultas.filter(function (c) { return c.consultaId !== consulta_2.consultaId; });
+                    exports.listaDeConsultas.push(requestBody_5);
+                    return [2 /*return*/, res.status(200).send(requestBody_5)];
+                }
+                return [2 /*return*/, res.status(404).send("Inconsistência inexistente, tente novamente")];
+            case 2:
+                error_9 = _a.sent();
+                yupError = error_9;
+                return [2 /*return*/, res.json({
+                        errors: yupError.message,
+                    })];
+            case 3: return [2 /*return*/];
+        }
+    });
+}); };
+exports.atualizarConsulta = atualizarConsulta;
+// DELETE - http://localhost:3000/consulta
+var deletarConsulta = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var consultaId_1, consulta;
+    return __generator(this, function (_a) {
+        try {
+            consultaId_1 = parseInt(req.params.consultaId);
+            consulta = exports.listaDeConsultas.find(function (c) { return c.consultaId === consultaId_1; });
+            if (consulta) {
+                exports.listaDeConsultas = exports.listaDeConsultas.filter(function (c) { return c.consultaId !== consultaId_1; });
+                return [2 /*return*/, res.status(200).send("Deletado com sucesso")];
+            }
+            return [2 /*return*/, res.status(404).send("Clínica inexistente, tente novamente")];
+        }
+        catch (error) {
+            return [2 /*return*/, res.status(400).send(error)];
+        }
+        return [2 /*return*/];
+    });
+}); };
+exports.deletarConsulta = deletarConsulta;
 //# sourceMappingURL=index.js.map
