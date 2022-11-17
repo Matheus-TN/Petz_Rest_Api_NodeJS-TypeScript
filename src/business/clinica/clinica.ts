@@ -8,12 +8,12 @@ export const clinicaBody: yup.SchemaOf<IClinica> = yup.object().shape({
     clinicaId: yup.number(),
     nome: yup.string().required(),
     crmv: yup.string().required(),
-    pontuacao: yup.number().required().min(0).max(5),
-    endereco: yup.string().required(),
+    pontuacao: yup.number().min(0).max(5),
+    endereco: yup.string(),
     sobre: yup.string(),
     servicos: yup.string(),
-    horarios: yup.array().required(),
-    pagamentos: yup.array().required()
+    horarios: yup.array(),
+    pagamentos: yup.array()
 })
 
 export const clinicaValido = (clinicaId: number, nome: string, crmv: string): boolean => {

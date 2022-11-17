@@ -32,12 +32,12 @@ exports.clinicaBody = yup.object().shape({
     clinicaId: yup.number(),
     nome: yup.string().required(),
     crmv: yup.string().required(),
-    pontuacao: yup.number().required().min(0).max(5),
-    endereco: yup.string().required(),
+    pontuacao: yup.number().min(0).max(5),
+    endereco: yup.string(),
     sobre: yup.string(),
     servicos: yup.string(),
-    horarios: yup.array().required(),
-    pagamentos: yup.array().required()
+    horarios: yup.array(),
+    pagamentos: yup.array()
 });
 var clinicaValido = function (clinicaId, nome, crmv) {
     return controllers_1.listaDeClinicas.find(function (c) { return c.clinicaId !== clinicaId && (c.nome === nome || c.crmv === crmv); }) === undefined;

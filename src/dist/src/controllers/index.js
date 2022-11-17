@@ -50,36 +50,36 @@ exports.listaDeUsuarios = [
         email: 'usuario1',
         senha: 'senha1',
         usuarioId: 1,
-        nome: 'string1',
-        endereco: 'string1'
+        nome: 'nome1',
+        endereco: 'endereco1'
     },
     {
         email: 'usuario2',
         senha: 'senha2',
         usuarioId: 2,
-        nome: 'string2',
-        endereco: 'string2'
+        nome: 'nome2',
+        endereco: 'endereco2'
     },
     {
         email: 'usuario3',
         senha: 'senha3',
         usuarioId: 3,
-        nome: 'string3',
-        endereco: 'string3'
+        nome: 'nome3',
+        endereco: 'endereco3'
     },
     {
         email: 'usuario4',
         senha: 'senha4',
         usuarioId: 4,
-        nome: 'string4',
-        endereco: 'string4'
+        nome: 'nome4',
+        endereco: 'endereco4'
     },
     {
         email: 'usuario5',
         senha: 'senha5',
         usuarioId: 5,
-        nome: 'string5',
-        endereco: 'string5'
+        nome: 'nome5',
+        endereco: 'endereco5'
     }
 ];
 // --- dbo.T_Pet ---
@@ -87,44 +87,44 @@ exports.listaDePets = [
     {
         petId: 1,
         idUsuario: 1,
-        nome: 'string1',
-        raca: 'string1',
+        nome: 'nomePet1',
+        raca: 'raca1',
         idade: 1,
         porte: 0,
-        alergias: 'string',
-        doencas: 'string'
+        alergias: 'alergia1',
+        doencas: 'doenca1'
     },
     {
         petId: 2,
         idUsuario: 2,
-        nome: 'string2',
-        raca: 'string2',
+        nome: 'nomePet2',
+        raca: 'raca2',
         idade: 2,
         porte: 1,
-        alergias: 'string',
-        doencas: 'string'
+        alergias: 'alergia2',
+        doencas: 'doenca2'
     },
     {
         petId: 3,
         idUsuario: 3,
-        nome: 'string3',
-        raca: 'string3',
+        nome: 'nomePet3',
+        raca: 'raca3',
         idade: 3,
         porte: 2
     },
     {
         petId: 4,
         idUsuario: 4,
-        nome: 'string4',
-        raca: 'string4',
+        nome: 'nomePet4',
+        raca: 'raca4',
         idade: 4,
         porte: 0
     },
     {
         petId: 5,
         idUsuario: 5,
-        nome: 'string5',
-        raca: 'string5',
+        nome: 'nomePet5',
+        raca: 'raca5',
         idade: 5,
         porte: 1
     }
@@ -132,40 +132,40 @@ exports.listaDePets = [
 // --- dbo.T_PetRua ---
 exports.listDePetsDeRua = [
     {
-        nome: 'string1',
-        localEncontrado: 'string1',
+        nome: 'nomePetRua1',
+        localEncontrado: 'localEncontrado1',
         ferido: 0,
         desnutrido: 0,
         agressivo: 0,
         porte: 0,
     },
     {
-        nome: 'string2',
-        localEncontrado: 'string2',
+        nome: 'nomePetRua2',
+        localEncontrado: 'localEncontrado2',
         ferido: 1,
         desnutrido: 1,
         agressivo: 1,
         porte: 1,
     },
     {
-        nome: 'string3',
-        localEncontrado: 'string3',
+        nome: 'nomePetRua3',
+        localEncontrado: 'localEncontrado3',
         ferido: 2,
         desnutrido: 2,
         agressivo: 2,
         porte: 2,
     },
     {
-        nome: 'string4',
-        localEncontrado: 'string4',
+        nome: 'nomePetRua4',
+        localEncontrado: 'localEncontrado4',
         ferido: 3,
         desnutrido: 3,
         agressivo: 3,
         porte: 0,
     },
     {
-        nome: 'string5',
-        localEncontrado: 'string5',
+        nome: 'nomePetRua5',
+        localEncontrado: 'localEncontrado5',
         ferido: 0,
         desnutrido: 0,
         agressivo: 0,
@@ -178,12 +178,12 @@ exports.listaDeClinicas = [
         email: 'clinica1',
         senha: 'senha1',
         clinicaId: 1,
-        nome: 'string1',
-        crmv: 'string1',
+        nome: 'nomeClinica1',
+        crmv: 'crmv1',
         pontuacao: 0,
-        endereco: 'string1',
-        sobre: 'string1',
-        servicos: 'string1',
+        endereco: 'endereco1',
+        sobre: 'sobre1',
+        servicos: 'servicos1',
         horarios: ['Seg. - Sex. das 8:00 - 17:00', 'Sáb. - Dom. das 12:00 - 17:00'],
         pagamentos: ['Mastercard', 'Visa']
     },
@@ -191,12 +191,12 @@ exports.listaDeClinicas = [
         email: 'clinica2',
         senha: 'senha2',
         clinicaId: 2,
-        nome: 'string2',
-        crmv: 'string2',
+        nome: 'nomeClinica2',
+        crmv: 'crmv2',
         pontuacao: 1,
-        endereco: 'string2',
-        sobre: 'string2',
-        servicos: 'string2',
+        endereco: 'endereco2',
+        sobre: 'sobre2',
+        servicos: 'servicos2',
         horarios: ['Seg. - Sex. das 8:00 - 17:00', 'Sáb. - Dom. das 12:00 - 17:00'],
         pagamentos: ['Mastercard', 'Visa']
     },
@@ -204,12 +204,12 @@ exports.listaDeClinicas = [
         email: 'clinica3',
         senha: 'senha3',
         clinicaId: 3,
-        nome: 'string3',
-        crmv: 'string3',
+        nome: 'nomeClinica3',
+        crmv: 'crmv3',
         pontuacao: 2,
-        endereco: 'string3',
-        sobre: 'string3',
-        servicos: 'string3',
+        endereco: 'endereco3',
+        sobre: 'sobre3',
+        servicos: 'servicos3',
         horarios: ['Seg. - Sex. das 8:00 - 17:00', 'Sáb. - Dom. das 12:00 - 17:00'],
         pagamentos: ['Mastercard', 'Visa']
     },
@@ -217,12 +217,12 @@ exports.listaDeClinicas = [
         email: 'clinica4',
         senha: 'senha4',
         clinicaId: 4,
-        nome: 'string4',
-        crmv: 'string4',
+        nome: 'nomeClinica4',
+        crmv: 'crmv4',
         pontuacao: 3,
-        endereco: 'string4',
-        sobre: 'string4',
-        servicos: 'string4',
+        endereco: 'endereco4',
+        sobre: 'sobre4',
+        servicos: 'servicos4',
         horarios: ['Seg. - Sex. das 8:00 - 17:00', 'Sáb. - Dom. das 12:00 - 17:00'],
         pagamentos: ['Mastercard', 'Visa']
     },
@@ -230,12 +230,12 @@ exports.listaDeClinicas = [
         email: 'clinica5',
         senha: 'senha5',
         clinicaId: 5,
-        nome: 'string5',
-        crmv: 'string5',
+        nome: 'nomeClinica5',
+        crmv: 'crmv5',
         pontuacao: 4,
-        endereco: 'string5',
-        sobre: 'string5',
-        servicos: 'string5',
+        endereco: 'endereco5',
+        sobre: 'sobre5',
+        servicos: 'servicos5',
         horarios: ['Seg. - Sex. das 8:00 - 17:00', 'Sáb. - Dom. das 12:00 - 17:00'],
         pagamentos: ['Mastercard', 'Visa']
     }
