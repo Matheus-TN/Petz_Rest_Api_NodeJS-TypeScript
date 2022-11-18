@@ -26,6 +26,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.petRuaBody = void 0;
 var yup = __importStar(require("yup"));
 exports.petRuaBody = yup.object().shape({
+    petRuaId: yup.number(),
     nome: yup.string().required(),
     localEncontrado: yup.string(),
     ferido: yup.number().required().min(0).max(4),

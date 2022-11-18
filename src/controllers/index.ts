@@ -102,8 +102,9 @@ export let listaDePets: IPet[] = [
 ];
 
 // --- dbo.T_PetRua ---
-export let listDePetsDeRua: IPetRua[] = [
+export let listaDePetsDeRua: IPetRua[] = [
   {
+    petRuaId: 1,
     nome:'nomePetRua1',
     localEncontrado: 'localEncontrado1',
     ferido:0,
@@ -112,6 +113,7 @@ export let listDePetsDeRua: IPetRua[] = [
     porte:0,
   },
   {
+    petRuaId: 2,
     nome:'nomePetRua2',
     localEncontrado: 'localEncontrado2',
     ferido:1,
@@ -120,6 +122,7 @@ export let listDePetsDeRua: IPetRua[] = [
     porte:1,
   },
   {
+    petRuaId: 3,
     nome:'nomePetRua3',
     localEncontrado: 'localEncontrado3',
     ferido:2,
@@ -128,6 +131,7 @@ export let listDePetsDeRua: IPetRua[] = [
     porte:2,
   },
   {
+    petRuaId: 4,
     nome:'nomePetRua4',
     localEncontrado: 'localEncontrado4',
     ferido:3,
@@ -136,6 +140,7 @@ export let listDePetsDeRua: IPetRua[] = [
     porte:0,
   },
   {
+    petRuaId: 5,
     nome:'nomePetRua5',
     localEncontrado: 'localEncontrado5',
     ferido:0,
@@ -362,6 +367,46 @@ export const buscarPets = async (req: Request, res: Response) => {
   res.status(200).send(listaDePets);
 };
 
+// GET - http://localhost:3000/pet/:petId
+export const buscarPetsById = async (req: Request, res: Response) => {
+  try{
+    const petId: number | undefined = parseInt(req.params.petId);
+
+    if(petId !== undefined && petId > 0){
+      const petInfo: IPet | undefined = listaDePets.find(p => p.petId === petId);
+
+      return petInfo ? 
+        res.status(200).send(petInfo) :
+        res.status(404).send("Pet inexistente, tente novamente")
+    }
+
+    return res.status(404).send("Por favor inserir petId valido")
+  }
+  catch(error){
+    res.status(404).send(error);
+  }
+}
+
+// GET - http://localhost:3000/petsByUserId/:userId
+export const buscarPetsByUserId = async (req: Request, res: Response) => {
+  try{
+    const userId: number | undefined = parseInt(req.params.userId);
+
+    if(userId !== undefined && userId > 0){
+      const userInfo: IUsuario | undefined = listaDeUsuarios.find(u => u.usuarioId === userId)
+
+      return userInfo ? 
+        res.status(200).send(listaDePets.filter(p => p.idUsuario === userId)) : 
+        res.status(404).send("Usuario inexistente, tente novamente")
+    }
+
+    return res.status(404).send("Por favor inserir userId valido")
+  }
+  catch(error){
+    return res.status(404).send(error)
+  }
+}
+
 // POST - http://localhost:3000/pet
 export const criarPet = async (req: Request<{}, {}, IPet>, res: Response) => {
   try {
@@ -431,11 +476,32 @@ export const deletarPet = async (req: Request, res: Response) => {
   }
 };
 
+
 // --- ENDPOINTS REFERENTES A PET DE RUA----
 //
 // GET - http://localhost:3000/petRua
 export const buscarPetsRua = async(req: Request, res: Response) => {
-  res.status(200).send(listDePetsDeRua);
+  res.status(200).send(listaDePetsDeRua);
+}
+
+// GET - http://localhost:3000/petRua/:petRuaId
+export const buscarPetsRuaById = async (req: Request, res: Response) => {
+  try{
+    const petRuaId: number | undefined = parseInt(req.params.petRuaId);
+
+    if(petRuaId !== undefined && petRuaId > 0){
+      const petRuaInfo: IPetRua | undefined = listaDePetsDeRua.find(p => p.petRuaId === petRuaId)
+
+      return petRuaInfo ? 
+        res.status(200).send(petRuaInfo) :
+        res.status(404).send("petRua inexistente, tente novamente")
+    }
+
+    return res.status(404).send("Por favor inserir petRuaId valido")
+  }
+  catch(error){
+    res.status(404).send(error)
+  }
 }
 
 //POST - http://localhost:3000/petRua
@@ -443,7 +509,7 @@ export const criarPetRua = async(req: Request<{}, {}, IPetRua>, res: Response) =
   try{
     const requestBody: IPetRua | undefined = await petRuaBody.validate(req.body);
 
-    listDePetsDeRua.push(requestBody);
+    listaDePetsDeRua.push(requestBody);
 
     return res.status(201).send(requestBody);
   }
@@ -461,6 +527,26 @@ export const criarPetRua = async(req: Request<{}, {}, IPetRua>, res: Response) =
 // GET - http://localhost:3000/clinica
 export const buscarClinicas = async(req: Request, res: Response) => {
   return res.status(200).send(listaDeClinicas);
+}
+
+// GET - http://localhost:3000/clinica/:clinicaId
+export const buscarClinicasById = async (req: Request, res: Response) => {
+  try{
+    const clinicaId: number | undefined = parseInt(req.params.clinicaId);
+
+    if(clinicaId !== undefined && clinicaId > 0){
+      const clinicaInfo: IClinica | undefined = listaDeClinicas.find(c => c.clinicaId === clinicaId);
+
+      return clinicaInfo ?
+        res.status(200).send(clinicaInfo) :
+        res.status(404).send("Clinica inexistente, tente novamente")
+    }
+
+    return res.status(404).send("Por favor inserir clinicaId valido")
+  }
+  catch(error){
+    res.status(404).send(error)
+  }
 }
 
 // POST - http://localhost:3000/clinica
@@ -534,6 +620,72 @@ export const deletarClinica = async (req: Request, res: Response) => {
 export const buscarConsultas = async (req: Request, res: Response) => {
   return res.status(200).send(listaDeConsultas);
 }
+
+// GET - http://localhost:3000/consulta/:consultaId
+export const buscarConsultasById = async (req: Request, res: Response) => {
+  try{
+    const consultaId: number | undefined = parseInt(req.params.consultaId);
+
+    if(consultaId !== undefined && consultaId > 0){
+      const consultaInfo: IConsulta | undefined = listaDeConsultas.find(c => c.consultaId === consultaId);
+
+      return consultaInfo ?
+        res.status(200).send(consultaInfo) :
+        res.status(404).send("Consulta inexistente, tente novamente")
+    }
+
+    return res.status(404).send("Por favor inserir consultaId valido")
+  }
+  catch(error){
+    return res.status(404).send(error)
+  }
+}
+
+// GET - http://localhost:3000/consultasByPetId/:petId
+export const buscarConsultasByPetId = async (req: Request, res: Response) => {
+  try{
+    const petId: number | undefined = parseInt(req.params.petId);
+
+    if(petId !== undefined && petId > 0){
+      const petInfo: IPet | undefined = listaDePets.find(p => p.petId === petId);
+
+      return petInfo ?
+        res.status(200).send(listaDeConsultas.filter(c => c.idPet === petId)) :
+        res.status(404).send("Pet inexistente, tente novamnete")
+    }
+
+    return res.status(404).send("Por favor inserir petId valido")
+  }
+  catch(error){
+    return res.status(404).send(error);
+  }
+}
+
+// GET - http://locahost:3000/consultasByUserId/:userId
+export const buscarConsultasByUserId = async (req: Request, res: Response) => {
+    try{
+      const userId: number | undefined = parseInt(req.params.userId);
+
+      if(userId !== undefined && userId > 0){
+        let consultasList: IConsulta[] | undefined = []
+        
+        listaDePets
+        .filter(p => p.idUsuario === userId)
+        .forEach(p => listaDeConsultas
+          .filter(c => c.idPet === p.petId)
+          .forEach(c => consultasList.push(c)))
+      
+        return consultasList ?
+          res.status(200).send(consultasList) :
+          res.status(404).send("Dados invalidos, tente novamente")
+      }
+
+      return res.status(404).send("Por favor inserir userId valido")
+    }
+    catch(error){
+      return res.status(404).send(error)
+    }
+ }
 
 // POST - http://localhost:3000/consulta
 export const criarConsulta = async (req: Request<{}, {}, IConsulta>, res: Response) => {

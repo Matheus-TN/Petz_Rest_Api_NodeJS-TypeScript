@@ -36,7 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deletarConsulta = exports.atualizarConsulta = exports.criarConsulta = exports.buscarConsultas = exports.deletarClinica = exports.atualizarClinica = exports.criarClinica = exports.buscarClinicas = exports.criarPetRua = exports.buscarPetsRua = exports.deletarPet = exports.atualizarPet = exports.criarPet = exports.buscarPets = exports.deletarUsuario = exports.atualizarUsuario = exports.criarUsuario = exports.buscarUsuarios = exports.login = exports.listaDeConsultas = exports.listaDeClinicas = exports.listDePetsDeRua = exports.listaDePets = exports.listaDeUsuarios = void 0;
+exports.deletarConsulta = exports.atualizarConsulta = exports.criarConsulta = exports.buscarConsultasByUserId = exports.buscarConsultasByPetId = exports.buscarConsultasById = exports.buscarConsultas = exports.deletarClinica = exports.atualizarClinica = exports.criarClinica = exports.buscarClinicasById = exports.buscarClinicas = exports.criarPetRua = exports.buscarPetsRuaById = exports.buscarPetsRua = exports.deletarPet = exports.atualizarPet = exports.criarPet = exports.buscarPetsByUserId = exports.buscarPetsById = exports.buscarPets = exports.deletarUsuario = exports.atualizarUsuario = exports.criarUsuario = exports.buscarUsuarios = exports.login = exports.listaDeConsultas = exports.listaDeClinicas = exports.listaDePetsDeRua = exports.listaDePets = exports.listaDeUsuarios = void 0;
 var clinica_1 = require("../business/clinica/clinica");
 var consulta_1 = require("../business/consulta/consulta");
 var pet_1 = require("../business/pet/pet");
@@ -130,8 +130,9 @@ exports.listaDePets = [
     }
 ];
 // --- dbo.T_PetRua ---
-exports.listDePetsDeRua = [
+exports.listaDePetsDeRua = [
     {
+        petRuaId: 1,
         nome: 'nomePetRua1',
         localEncontrado: 'localEncontrado1',
         ferido: 0,
@@ -140,6 +141,7 @@ exports.listDePetsDeRua = [
         porte: 0,
     },
     {
+        petRuaId: 2,
         nome: 'nomePetRua2',
         localEncontrado: 'localEncontrado2',
         ferido: 1,
@@ -148,6 +150,7 @@ exports.listDePetsDeRua = [
         porte: 1,
     },
     {
+        petRuaId: 3,
         nome: 'nomePetRua3',
         localEncontrado: 'localEncontrado3',
         ferido: 2,
@@ -156,6 +159,7 @@ exports.listDePetsDeRua = [
         porte: 2,
     },
     {
+        petRuaId: 4,
         nome: 'nomePetRua4',
         localEncontrado: 'localEncontrado4',
         ferido: 3,
@@ -164,6 +168,7 @@ exports.listDePetsDeRua = [
         porte: 0,
     },
     {
+        petRuaId: 5,
         nome: 'nomePetRua5',
         localEncontrado: 'localEncontrado5',
         ferido: 0,
@@ -405,6 +410,48 @@ var buscarPets = function (req, res) { return __awaiter(void 0, void 0, void 0, 
     });
 }); };
 exports.buscarPets = buscarPets;
+// GET - http://localhost:3000/pet/:petId
+var buscarPetsById = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var petId_1, petInfo;
+    return __generator(this, function (_a) {
+        try {
+            petId_1 = parseInt(req.params.petId);
+            if (petId_1 !== undefined && petId_1 > 0) {
+                petInfo = exports.listaDePets.find(function (p) { return p.petId === petId_1; });
+                return [2 /*return*/, petInfo ?
+                        res.status(200).send(petInfo) :
+                        res.status(404).send("Pet inexistente, tente novamente")];
+            }
+            return [2 /*return*/, res.status(404).send("Por favor inserir petId valido")];
+        }
+        catch (error) {
+            res.status(404).send(error);
+        }
+        return [2 /*return*/];
+    });
+}); };
+exports.buscarPetsById = buscarPetsById;
+// GET - http://localhost:3000/petsByUserId/:userId
+var buscarPetsByUserId = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var userId_1, userInfo;
+    return __generator(this, function (_a) {
+        try {
+            userId_1 = parseInt(req.params.userId);
+            if (userId_1 !== undefined && userId_1 > 0) {
+                userInfo = exports.listaDeUsuarios.find(function (u) { return u.usuarioId === userId_1; });
+                return [2 /*return*/, userInfo ?
+                        res.status(200).send(exports.listaDePets.filter(function (p) { return p.idUsuario === userId_1; })) :
+                        res.status(404).send("Usuario inexistente, tente novamente")];
+            }
+            return [2 /*return*/, res.status(404).send("Por favor inserir userId valido")];
+        }
+        catch (error) {
+            return [2 /*return*/, res.status(404).send(error)];
+        }
+        return [2 /*return*/];
+    });
+}); };
+exports.buscarPetsByUserId = buscarPetsByUserId;
 // POST - http://localhost:3000/pet
 var criarPet = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var requestBody, error_3, yupError;
@@ -466,13 +513,13 @@ var atualizarPet = function (req, res) { return __awaiter(void 0, void 0, void 0
 exports.atualizarPet = atualizarPet;
 // DELETE - http://localhost:3000/pet/petId
 var deletarPet = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var petId_1, pet;
+    var petId_2, pet;
     return __generator(this, function (_a) {
         try {
-            petId_1 = parseInt(req.params.petId);
-            pet = exports.listaDePets.find(function (p) { return p.petId === petId_1; });
+            petId_2 = parseInt(req.params.petId);
+            pet = exports.listaDePets.find(function (p) { return p.petId === petId_2; });
             if (pet) {
-                exports.listaDePets = exports.listaDePets.filter(function (p) { return p.petId !== petId_1; });
+                exports.listaDePets = exports.listaDePets.filter(function (p) { return p.petId !== petId_2; });
                 return [2 /*return*/, res.status(204).send("Deletado com sucesso")];
             }
             return [2 /*return*/, res.status(404).send("Pet inexistente, tente novamente")];
@@ -489,11 +536,32 @@ exports.deletarPet = deletarPet;
 // GET - http://localhost:3000/petRua
 var buscarPetsRua = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
-        res.status(200).send(exports.listDePetsDeRua);
+        res.status(200).send(exports.listaDePetsDeRua);
         return [2 /*return*/];
     });
 }); };
 exports.buscarPetsRua = buscarPetsRua;
+// GET - http://localhost:3000/petRua/:petRuaId
+var buscarPetsRuaById = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var petRuaId_1, petRuaInfo;
+    return __generator(this, function (_a) {
+        try {
+            petRuaId_1 = parseInt(req.params.petRuaId);
+            if (petRuaId_1 !== undefined && petRuaId_1 > 0) {
+                petRuaInfo = exports.listaDePetsDeRua.find(function (p) { return p.petRuaId === petRuaId_1; });
+                return [2 /*return*/, petRuaInfo ?
+                        res.status(200).send(petRuaInfo) :
+                        res.status(404).send("petRua inexistente, tente novamente")];
+            }
+            return [2 /*return*/, res.status(404).send("Por favor inserir petRuaId valido")];
+        }
+        catch (error) {
+            res.status(404).send(error);
+        }
+        return [2 /*return*/];
+    });
+}); };
+exports.buscarPetsRuaById = buscarPetsRuaById;
 //POST - http://localhost:3000/petRua
 var criarPetRua = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var requestBody, error_5, yupError;
@@ -504,7 +572,7 @@ var criarPetRua = function (req, res) { return __awaiter(void 0, void 0, void 0,
                 return [4 /*yield*/, petRua_1.petRuaBody.validate(req.body)];
             case 1:
                 requestBody = _a.sent();
-                exports.listDePetsDeRua.push(requestBody);
+                exports.listaDePetsDeRua.push(requestBody);
                 return [2 /*return*/, res.status(201).send(requestBody)];
             case 2:
                 error_5 = _a.sent();
@@ -526,6 +594,27 @@ var buscarClinicas = function (req, res) { return __awaiter(void 0, void 0, void
     });
 }); };
 exports.buscarClinicas = buscarClinicas;
+// GET - http://localhost:3000/clinica/:clinicaId
+var buscarClinicasById = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var clinicaId_1, clinicaInfo;
+    return __generator(this, function (_a) {
+        try {
+            clinicaId_1 = parseInt(req.params.clinicaId);
+            if (clinicaId_1 !== undefined && clinicaId_1 > 0) {
+                clinicaInfo = exports.listaDeClinicas.find(function (c) { return c.clinicaId === clinicaId_1; });
+                return [2 /*return*/, clinicaInfo ?
+                        res.status(200).send(clinicaInfo) :
+                        res.status(404).send("Clinica inexistente, tente novamente")];
+            }
+            return [2 /*return*/, res.status(404).send("Por favor inserir clinicaId valido")];
+        }
+        catch (error) {
+            res.status(404).send(error);
+        }
+        return [2 /*return*/];
+    });
+}); };
+exports.buscarClinicasById = buscarClinicasById;
 // POST - http://localhost:3000/clinica
 var criarClinica = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var requestBody, error_6, yupError;
@@ -581,13 +670,13 @@ var atualizarClinica = function (req, res) { return __awaiter(void 0, void 0, vo
 }); };
 exports.atualizarClinica = atualizarClinica;
 var deletarClinica = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var clinicaId_1, clinica;
+    var clinicaId_2, clinica;
     return __generator(this, function (_a) {
         try {
-            clinicaId_1 = parseInt(req.params.clinicaId);
-            clinica = exports.listaDeClinicas.find(function (c) { return c.clinicaId === clinicaId_1; });
+            clinicaId_2 = parseInt(req.params.clinicaId);
+            clinica = exports.listaDeClinicas.find(function (c) { return c.clinicaId === clinicaId_2; });
             if (clinica) {
-                exports.listaDeClinicas = exports.listaDeClinicas.filter(function (c) { return c.clinicaId !== clinicaId_1; });
+                exports.listaDeClinicas = exports.listaDeClinicas.filter(function (c) { return c.clinicaId !== clinicaId_2; });
                 return [2 /*return*/, res.status(204).send("Deletado com sucesso")];
             }
             return [2 /*return*/, res.status(404).send("Clínica inexistente, tente novamente")];
@@ -608,6 +697,74 @@ var buscarConsultas = function (req, res) { return __awaiter(void 0, void 0, voi
     });
 }); };
 exports.buscarConsultas = buscarConsultas;
+// GET - http://localhost:3000/consulta/:consultaId
+var buscarConsultasById = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var consultaId_1, consultaInfo;
+    return __generator(this, function (_a) {
+        try {
+            consultaId_1 = parseInt(req.params.consultaId);
+            if (consultaId_1 !== undefined && consultaId_1 > 0) {
+                consultaInfo = exports.listaDeConsultas.find(function (c) { return c.consultaId === consultaId_1; });
+                return [2 /*return*/, consultaInfo ?
+                        res.status(200).send(consultaInfo) :
+                        res.status(404).send("Consulta inexistente, tente novamente")];
+            }
+            return [2 /*return*/, res.status(404).send("Por favor inserir consultaId valido")];
+        }
+        catch (error) {
+            return [2 /*return*/, res.status(404).send(error)];
+        }
+        return [2 /*return*/];
+    });
+}); };
+exports.buscarConsultasById = buscarConsultasById;
+// GET - http://localhost:3000/consultasByPetId/:petId
+var buscarConsultasByPetId = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var petId_3, petInfo;
+    return __generator(this, function (_a) {
+        try {
+            petId_3 = parseInt(req.params.petId);
+            if (petId_3 !== undefined && petId_3 > 0) {
+                petInfo = exports.listaDePets.find(function (p) { return p.petId === petId_3; });
+                return [2 /*return*/, petInfo ?
+                        res.status(200).send(exports.listaDeConsultas.filter(function (c) { return c.idPet === petId_3; })) :
+                        res.status(404).send("Pet inexistente, tente novamnete")];
+            }
+            return [2 /*return*/, res.status(404).send("Por favor inserir petId valido")];
+        }
+        catch (error) {
+            return [2 /*return*/, res.status(404).send(error)];
+        }
+        return [2 /*return*/];
+    });
+}); };
+exports.buscarConsultasByPetId = buscarConsultasByPetId;
+// GET - http://locahost:3000/consultasByUserId/:userId
+var buscarConsultasByUserId = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var userId_2, consultasList_1;
+    return __generator(this, function (_a) {
+        try {
+            userId_2 = parseInt(req.params.userId);
+            if (userId_2 !== undefined && userId_2 > 0) {
+                consultasList_1 = [];
+                exports.listaDePets
+                    .filter(function (p) { return p.idUsuario === userId_2; })
+                    .forEach(function (p) { return exports.listaDeConsultas
+                    .filter(function (c) { return c.idPet === p.petId; })
+                    .forEach(function (c) { return consultasList_1.push(c); }); });
+                return [2 /*return*/, consultasList_1 ?
+                        res.status(200).send(consultasList_1) :
+                        res.status(404).send("Dados invalidos, tente novamente")];
+            }
+            return [2 /*return*/, res.status(404).send("Por favor inserir userId valido")];
+        }
+        catch (error) {
+            return [2 /*return*/, res.status(404).send(error)];
+        }
+        return [2 /*return*/];
+    });
+}); };
+exports.buscarConsultasByUserId = buscarConsultasByUserId;
 // POST - http://localhost:3000/consulta
 var criarConsulta = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var requestBody_4, pet, clinica, error_8, yupError;
@@ -670,13 +827,13 @@ var atualizarConsulta = function (req, res) { return __awaiter(void 0, void 0, v
 exports.atualizarConsulta = atualizarConsulta;
 // DELETE - http://localhost:3000/consulta
 var deletarConsulta = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var consultaId_1, consulta;
+    var consultaId_2, consulta;
     return __generator(this, function (_a) {
         try {
-            consultaId_1 = parseInt(req.params.consultaId);
-            consulta = exports.listaDeConsultas.find(function (c) { return c.consultaId === consultaId_1; });
+            consultaId_2 = parseInt(req.params.consultaId);
+            consulta = exports.listaDeConsultas.find(function (c) { return c.consultaId === consultaId_2; });
             if (consulta) {
-                exports.listaDeConsultas = exports.listaDeConsultas.filter(function (c) { return c.consultaId !== consultaId_1; });
+                exports.listaDeConsultas = exports.listaDeConsultas.filter(function (c) { return c.consultaId !== consultaId_2; });
                 return [2 /*return*/, res.status(200).send("Deletado com sucesso")];
             }
             return [2 /*return*/, res.status(404).send("Clínica inexistente, tente novamente")];

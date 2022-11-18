@@ -2,6 +2,7 @@ import * as yup from 'yup'
 import IPetRua from '../../models/petRua/petRua'
 
 export const petRuaBody: yup.SchemaOf<IPetRua> = yup.object().shape({
+    petRuaId: yup.number(),
     nome: yup.string().required(),
     localEncontrado: yup.string(),
     ferido: yup.number().required().min(0).max(4),
