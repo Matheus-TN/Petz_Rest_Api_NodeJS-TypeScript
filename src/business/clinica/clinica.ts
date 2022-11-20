@@ -3,8 +3,8 @@ import { listaDeClinicas } from '../../controllers'
 import IClinica from '../../models/clinica/clinica'
 
 export const clinicaBody: yup.SchemaOf<IClinica> = yup.object().shape({
-    email: yup.string().required().min(1),
-    senha: yup.string().required().min(1),
+    email: yup.string().min(1),
+    senha: yup.string().min(1),
     clinicaId: yup.number(),
     nome: yup.string().required(),
     crmv: yup.string().required(),
