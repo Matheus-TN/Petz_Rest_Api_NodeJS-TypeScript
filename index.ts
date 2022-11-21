@@ -35,7 +35,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.get("/login", login);
+app.post("/login", login);
 
 app.get("/usuario", buscarUsuarios);
 app.post("/usuario", criarUsuario);
