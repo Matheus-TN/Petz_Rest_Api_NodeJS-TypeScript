@@ -27,8 +27,8 @@ exports.clinicaValido = exports.clinicaBody = void 0;
 var yup = __importStar(require("yup"));
 var controllers_1 = require("../../controllers");
 exports.clinicaBody = yup.object().shape({
-    email: yup.string().required().min(1),
-    senha: yup.string().required().min(1),
+    email: yup.string().min(1),
+    senha: yup.string().min(1),
     clinicaId: yup.number(),
     nome: yup.string().required(),
     crmv: yup.string().required(),

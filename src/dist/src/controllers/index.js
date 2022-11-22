@@ -36,7 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deletarConsulta = exports.atualizarConsulta = exports.criarConsulta = exports.buscarConsultasByUserId = exports.buscarConsultasByPetId = exports.buscarConsultasById = exports.buscarConsultas = exports.deletarClinica = exports.atualizarClinica = exports.criarClinica = exports.buscarClinicasById = exports.buscarClinicas = exports.criarPetRua = exports.buscarPetsRuaById = exports.buscarPetsRua = exports.deletarPet = exports.atualizarPet = exports.criarPet = exports.buscarPetsByUserId = exports.buscarPetsById = exports.buscarPets = exports.deletarUsuario = exports.atualizarUsuario = exports.criarUsuario = exports.buscarUsuarios = exports.login = exports.listaDeConsultas = exports.listaDeClinicas = exports.listaDePetsDeRua = exports.listaDePets = exports.listaDeUsuarios = void 0;
+exports.deletarConsulta = exports.atualizarConsulta = exports.criarConsulta = exports.buscarConsultasByClinicaId = exports.buscarConsultasByUserId = exports.buscarConsultasByPetId = exports.buscarConsultasById = exports.buscarConsultas = exports.deletarClinica = exports.atualizarClinica = exports.criarClinica = exports.buscarClinicasById = exports.buscarClinicas = exports.criarPetRua = exports.buscarPetsRuaById = exports.buscarPetsRua = exports.deletarPet = exports.atualizarPet = exports.criarPet = exports.buscarPetsByClinicaId = exports.buscarPetsByUserId = exports.buscarPetsById = exports.buscarPets = exports.deletarUsuario = exports.atualizarUsuario = exports.criarUsuario = exports.buscarUsuarios = exports.login = exports.listaDeConsultas = exports.listaDeClinicas = exports.listaDePetsDeRua = exports.listaDePets = exports.listaDeUsuarios = void 0;
 var clinica_1 = require("../business/clinica/clinica");
 var consulta_1 = require("../business/consulta/consulta");
 var pet_1 = require("../business/pet/pet");
@@ -452,6 +452,27 @@ var buscarPetsByUserId = function (req, res) { return __awaiter(void 0, void 0, 
     });
 }); };
 exports.buscarPetsByUserId = buscarPetsByUserId;
+// GET - http://localhost:3000/petsByClinicaId/:clinicaId
+var buscarPetsByClinicaId = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var clinicaId_1, petsList_1;
+    return __generator(this, function (_a) {
+        try {
+            clinicaId_1 = parseInt(req.params.clinicaId);
+            if (clinicaId_1 !== undefined && clinicaId_1 > 0) {
+                petsList_1 = [];
+                exports.listaDeConsultas
+                    .filter(function (c) { return c.idClinica === clinicaId_1; })
+                    .forEach(function (c) { return petsList_1.push(exports.listaDePets.find(function (p) { return p.petId === c.idPet; })); });
+                return [2 /*return*/, res.status(200).send(petsList_1)];
+            }
+        }
+        catch (error) {
+            return [2 /*return*/, res.status(404).send(error)];
+        }
+        return [2 /*return*/];
+    });
+}); };
+exports.buscarPetsByClinicaId = buscarPetsByClinicaId;
 // POST - http://localhost:3000/pet
 var criarPet = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var requestBody, error_3, yupError;
@@ -596,12 +617,12 @@ var buscarClinicas = function (req, res) { return __awaiter(void 0, void 0, void
 exports.buscarClinicas = buscarClinicas;
 // GET - http://localhost:3000/clinica/:clinicaId
 var buscarClinicasById = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var clinicaId_1, clinicaInfo;
+    var clinicaId_2, clinicaInfo;
     return __generator(this, function (_a) {
         try {
-            clinicaId_1 = parseInt(req.params.clinicaId);
-            if (clinicaId_1 !== undefined && clinicaId_1 > 0) {
-                clinicaInfo = exports.listaDeClinicas.find(function (c) { return c.clinicaId === clinicaId_1; });
+            clinicaId_2 = parseInt(req.params.clinicaId);
+            if (clinicaId_2 !== undefined && clinicaId_2 > 0) {
+                clinicaInfo = exports.listaDeClinicas.find(function (c) { return c.clinicaId === clinicaId_2; });
                 return [2 /*return*/, clinicaInfo ?
                         res.status(200).send(clinicaInfo) :
                         res.status(404).send("Clinica inexistente, tente novamente")];
@@ -670,13 +691,13 @@ var atualizarClinica = function (req, res) { return __awaiter(void 0, void 0, vo
 }); };
 exports.atualizarClinica = atualizarClinica;
 var deletarClinica = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var clinicaId_2, clinica;
+    var clinicaId_3, clinica;
     return __generator(this, function (_a) {
         try {
-            clinicaId_2 = parseInt(req.params.clinicaId);
-            clinica = exports.listaDeClinicas.find(function (c) { return c.clinicaId === clinicaId_2; });
+            clinicaId_3 = parseInt(req.params.clinicaId);
+            clinica = exports.listaDeClinicas.find(function (c) { return c.clinicaId === clinicaId_3; });
             if (clinica) {
-                exports.listaDeClinicas = exports.listaDeClinicas.filter(function (c) { return c.clinicaId !== clinicaId_2; });
+                exports.listaDeClinicas = exports.listaDeClinicas.filter(function (c) { return c.clinicaId !== clinicaId_3; });
                 return [2 /*return*/, res.status(204).send("Deletado com sucesso")];
             }
             return [2 /*return*/, res.status(404).send("Clínica inexistente, tente novamente")];
@@ -765,6 +786,24 @@ var buscarConsultasByUserId = function (req, res) { return __awaiter(void 0, voi
     });
 }); };
 exports.buscarConsultasByUserId = buscarConsultasByUserId;
+// GET - http://localhost:3000/consultasByClinicaId/:clinicaId
+var buscarConsultasByClinicaId = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var clinicaId_4;
+    return __generator(this, function (_a) {
+        try {
+            clinicaId_4 = parseInt(req.params.clinicaId);
+            if (clinicaId_4 !== undefined && clinicaId_4 > 0) {
+                return [2 /*return*/, res.status(200).send(exports.listaDeConsultas.filter(function (c) { return c.idClinica === clinicaId_4; }))];
+            }
+            return [2 /*return*/, res.status(404).send("Dados invalidos, tente novamente")];
+        }
+        catch (error) {
+            return [2 /*return*/, res.status(404).send(error)];
+        }
+        return [2 /*return*/];
+    });
+}); };
+exports.buscarConsultasByClinicaId = buscarConsultasByClinicaId;
 // POST - http://localhost:3000/consulta
 var criarConsulta = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var requestBody_4, pet, clinica, error_8, yupError;
