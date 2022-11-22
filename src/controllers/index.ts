@@ -17,39 +17,39 @@ import IUsuario from "../models/usuario/usuario";
 // --- dbo.T_Usuario ---
 export let listaDeUsuarios: IUsuario[] = [
   {
-    email: 'usuario1',
-    senha: 'senha1',
+    email: 'luiz.hkl@gmail.com',
+    senha: '2509ui87',
     usuarioId: 1,
-    nome:'nome1',
-    endereco:'endereco1'
+    nome:'Luiz Hélio Kleed',
+    endereco:'R. Jardins da Amazônia'
   },
   {
-    email: 'usuario2',
-    senha: 'senha2',
+    email: 'fernanda33@homail.com',
+    senha: 'f3rn4nda6780',
     usuarioId: 2,
-    nome:'nome2',
-    endereco:'endereco2'
+    nome:'Fernanda Lima de Souza',
+    endereco:'R. Ibirapuera'
   },
   {
-    email: 'usuario3',
-    senha: 'senha3',
+    email: 'caio0998@yahoo.com.br',
+    senha: '0956iu97ty',
     usuarioId: 3,
-    nome:'nome3',
-    endereco:'endereco3'
+    nome:'Caio da Silva Souza ',
+    endereco:'R. Felipe Simas'
   },
   {
-    email: 'usuario4',
-    senha: 'senha4',
+    email: 'helio123@outlook.com',
+    senha: 'euamomeupet09864',
     usuarioId: 4,
-    nome:'nome4',
-    endereco:'endereco4'
+    nome:'Hélio Inácio Costa',
+    endereco:'R. Ponta da Praia'
   },
   {
-    email: 'usuario5',
-    senha: 'senha5',
+    email: 'gabriel432@gmail.com',
+    senha: 'pq234fgs5657',
     usuarioId: 5,
-    nome:'nome5',
-    endereco:'endereco5'
+    nome:'Gabriel Maia Ferreira',
+    endereco:'R. Ana Costa'
   }
 ];
 
@@ -58,46 +58,52 @@ export let listaDePets: IPet[] = [
   {
     petId:1,
     idUsuario: 1,
-    nome:'nomePet1',
-    raca:'raca1',
+    nome:'Apolo',
+    raca:'Border Collie',
     idade:1,
-    porte:0,
-    alergias:'alergia1',
-    doencas:'doenca1'
+    porte:2,
+    alergias:'Lactose',
+    doencas:'Cinomose'
   },
   {
     petId:2,
     idUsuario: 2,
-    nome:'nomePet2',
-    raca:'raca2',
+    nome:'Minnie',
+    raca:'Chihuahua',
     idade:2,
-    porte:1,
-    alergias:'alergia2',
-    doencas:'doenca2'
+    porte:0,
+    alergias:'Corantes superficiais',
+    doencas:'Não tem'
   },
   {
     petId:3,
     idUsuario: 3,
-    nome:'nomePet3',
-    raca:'raca3',
+    nome:'Mel',
+    raca:'Buldogue ingês',
     idade:3,
-    porte:2
+    porte:2,
+    alergias: 'Não tem',
+    doencas: 'Papiloma'
   },
   {
     petId:4,
     idUsuario: 4,
-    nome:'nomePet4',
-    raca:'raca4',
+    nome:'Tony',
+    raca:'Dálmata',
     idade:4,
-    porte:0
+    porte:1,
+    alergias: 'Picada de insetos',
+    doencas: 'Otite'
   },
   {
     petId:5,
     idUsuario: 5,
-    nome:'nomePet5',
-    raca:'raca5',
+    nome:'Bob',
+    raca:'Golden Retriever',
     idade:5,
-    porte:1
+    porte:2,
+    alergias: 'Não tem',
+    doencas: 'Não tem'
   }
 ];
 
@@ -105,115 +111,115 @@ export let listaDePets: IPet[] = [
 export let listaDePetsDeRua: IPetRua[] = [
   {
     petRuaId: 1,
-    nome:'nomePetRua1',
-    localEncontrado: 'localEncontrado1',
-    ferido:0,
+    nome:'Poppy',
+    localEncontrado: 'R. Jardins da Amazônia',
+    ferido:1,
     desnutrido:0,
     agressivo:0,
-    porte:0,
+    porte:1,
   },
   {
     petRuaId: 2,
-    nome:'nomePetRua2',
-    localEncontrado: 'localEncontrado2',
-    ferido:1,
-    desnutrido:1,
-    agressivo:1,
-    porte:1,
-  },
-  {
-    petRuaId: 3,
-    nome:'nomePetRua3',
-    localEncontrado: 'localEncontrado3',
+    nome:'Luna',
+    localEncontrado: 'Av. Santo Antônio',
     ferido:2,
     desnutrido:2,
-    agressivo:2,
+    agressivo:3,
     porte:2,
   },
   {
-    petRuaId: 4,
-    nome:'nomePetRua4',
-    localEncontrado: 'localEncontrado4',
+    petRuaId: 3,
+    nome:'Chico',
+    localEncontrado: 'R. Mar Casado',
     ferido:3,
     desnutrido:3,
-    agressivo:3,
+    agressivo:1,
     porte:0,
   },
   {
-    petRuaId: 5,
-    nome:'nomePetRua5',
-    localEncontrado: 'localEncontrado5',
+    petRuaId: 4,
+    nome:'Amendoim',
+    localEncontrado: 'R. Fernando de Moraes',
     ferido:0,
-    desnutrido:0,
-    agressivo:0,
-    porte:1,
+    desnutrido:1,
+    agressivo:1,
+    porte:2,
+  },
+  {
+    petRuaId: 5,
+    nome:'Lua',
+    localEncontrado: 'Av. Farias Maia',
+    ferido:1,
+    desnutrido:2,
+    agressivo:3,
+    porte:2,
   },
 ];
 
 // --- dbo.T_Clinica ---
 export let listaDeClinicas: IClinica[] = [
   {
-    email: 'clinica1',
-    senha: 'senha1',
+    email: 'clinicavidaanimal@hotmail.com',
+    senha: '1456879756765',
     clinicaId: 1,
-    nome:'nomeClinica1',
-    crmv:'crmv1',
-    pontuacao:0,
-    endereco:'endereco1',
-    sobre:'sobre1',
-    servicos:'servicos1',
-    horarios: ['Seg. - Sex. das 8:00 - 17:00', 'Sáb. - Dom. das 12:00 - 17:00'],
-    pagamentos:['Mastercard', 'Visa']
-  },
-  {
-    email: 'clinica2',
-    senha: 'senha2',
-    clinicaId: 2,
-    nome:'nomeClinica2',
-    crmv:'crmv2',
-    pontuacao:1,
-    endereco:'endereco2',
-    sobre:'sobre2',
-    servicos:'servicos2',
-    horarios: ['Seg. - Sex. das 8:00 - 17:00', 'Sáb. - Dom. das 12:00 - 17:00'],
-    pagamentos:['Mastercard', 'Visa']
-  },
-  {
-    email: 'clinica3',
-    senha: 'senha3',
-    clinicaId: 3,
-    nome:'nomeClinica3',
-    crmv:'crmv3',
-    pontuacao:2,
-    endereco:'endereco3',
-    sobre:'sobre3',
-    servicos:'servicos3',
-    horarios: ['Seg. - Sex. das 8:00 - 17:00', 'Sáb. - Dom. das 12:00 - 17:00'],
-    pagamentos:['Mastercard', 'Visa']
-  },
-  {
-    email: 'clinica4',
-    senha: 'senha4',
-    clinicaId: 4,
-    nome:'nomeClinica4',
-    crmv:'crmv4',
-    pontuacao:3,
-    endereco:'endereco4',
-    sobre:'sobre4',
-    servicos:'servicos4',
-    horarios: ['Seg. - Sex. das 8:00 - 17:00', 'Sáb. - Dom. das 12:00 - 17:00'],
-    pagamentos:['Mastercard', 'Visa']
-  },
-  {
-    email: 'clinica5',
-    senha: 'senha5',
-    clinicaId: 5,
-    nome:'nomeClinica5',
-    crmv:'crmv5',
+    nome:'Clínica Vida Animal',
+    crmv:'MG Nº 11586',
     pontuacao:4,
-    endereco:'endereco5',
-    sobre:'sobre5',
-    servicos:'servicos5',
+    endereco:'R. Jardins da Amazônia',
+    sobre:'Clinica especializada em reabilitação',
+    servicos:'Consultas Básicas e Tratamento de lesões',
+    horarios: ['Seg. - Sex. das 8:00 - 17:00', 'Sáb. - Dom. das 12:00 - 17:00'],
+    pagamentos:['Mastercard', 'Visa']
+  },
+  {
+    email: 'clinicadermapets@yahoo.com.br',
+    senha: '3845i430945843',
+    clinicaId: 2,
+    nome:'Clínica DermaPets',
+    crmv:'SP Nº 10486',
+    pontuacao:3,
+    endereco:'R. Felipe Simas',
+    sobre:'Clinica especializada em tratamento de alergias',
+    servicos:'Consultas Básicas e Tratamento de alergia',
+    horarios: ['Seg. - Sex. das 8:00 - 17:00', 'Sáb. - Dom. das 12:00 - 17:00'],
+    pagamentos:['Mastercard', 'Visa']
+  },
+  {
+    email: 'clinicacaosantista@outlook.com',
+    senha: '2546fgfhgfhj54',
+    clinicaId: 3,
+    nome:'Clínica Cão Santista',
+    crmv:'SP Nº 15566 > 5',
+    pontuacao:5,
+    endereco:'R. Ponta da Praia',
+    sobre:'Clinica especializada em tratamento de doênças',
+    servicos:'Consultas Básicas, Acompanhamento Veterinário e Tratamento de doênças',
+    horarios: ['Seg. - Sex. das 8:00 - 17:00', 'Sáb. - Dom. das 12:00 - 17:00'],
+    pagamentos:['Mastercard', 'Visa']
+  },
+  {
+    email: 'clinicaveterinariochico@hotmail.com',
+    senha: 'chndfkgml567575',
+    clinicaId: 4,
+    nome:'Clínica Veterinária Dr. Chico',
+    crmv:'BH Nº 13386',
+    pontuacao:2,
+    endereco:'R. Mar Casado',
+    sobre:'Clinica especializada em tratamento de câncer',
+    servicos:'Consultas Básicas, Acompanhamento Veterinário e Tratamento de câncer',
+    horarios: ['Seg. - Sex. das 8:00 - 17:00', 'Sáb. - Dom. das 12:00 - 17:00'],
+    pagamentos:['Mastercard', 'Visa']
+  },
+  {
+    email: 'clinicaciaanimal@gmail.com',
+    senha: '546yurty87d4565',
+    clinicaId: 5,
+    nome:'Clinica Cia Animal',
+    crmv:'AM Nº 17789',
+    pontuacao:4,
+    endereco:'R. Fernando de Moraes',
+    sobre:'Clinica especializada em reabilitação',
+    servicos:'Consultas Básicas e Tratamento de lesões',
     horarios: ['Seg. - Sex. das 8:00 - 17:00', 'Sáb. - Dom. das 12:00 - 17:00'],
     pagamentos:['Mastercard', 'Visa']
   }
@@ -547,7 +553,7 @@ export const criarPetRua = async(req: Request<{}, {}, IPetRua>, res: Response) =
 //
 // GET - http://localhost:3000/clinica
 export const buscarClinicas = async(req: Request, res: Response) => {
-  return res.status(200).send(listaDeClinicas);
+  return res.status(200).send(listaDeClinicas.map(c => c.horarios ?? 'Não tem horários disponíveis'));
 }
 
 // GET - http://localhost:3000/clinica/:clinicaId
@@ -557,6 +563,8 @@ export const buscarClinicasById = async (req: Request, res: Response) => {
 
     if(clinicaId !== undefined && clinicaId > 0){
       const clinicaInfo: IClinica | undefined = listaDeClinicas.find(c => c.clinicaId === clinicaId);
+
+      clinicaInfo.horarios ?? 'Não tem horários disponíveis';
 
       return clinicaInfo ?
         res.status(200).send(clinicaInfo) :
