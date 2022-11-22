@@ -11,3 +11,21 @@ export const petRuaBody: yup.SchemaOf<IPetRua> = yup.object().shape({
     porte: yup.number().required().min(0).max(2),
     observacoes: yup.string()
 });
+
+export const switchPorteRua = (pet: IPetRua) => {
+    switch (pet.porte){
+        case 0: 
+            pet.porte = 'Pequeno'
+            break;
+
+        case 1: 
+            pet.porte = 'Medio'
+            break;
+
+        case 2: 
+            pet.porte = 'Grande'
+            break;
+    }
+
+    return pet;
+}

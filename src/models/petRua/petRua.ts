@@ -5,6 +5,6 @@ export default interface IPetRua {
     ferido:number,
     desnutrido:number,
     agressivo:number,
-    porte:number,
+    porte:any,
     observacoes?:string
 }

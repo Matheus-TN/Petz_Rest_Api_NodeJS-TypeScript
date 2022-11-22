@@ -3,7 +3,7 @@ import * as yup from "yup";
 import { clinicaBody, clinicaValido } from "../business/clinica/clinica";
 import { consultaBody, consultaValida } from "../business/consulta/consulta";
 import { petBody, petValido, petValidoParaAtualizar, switchPorte } from "../business/pet/pet";
-import { petRuaBody } from "../business/petRua/petRua";
+import { petRuaBody, switchPorteRua} from "../business/petRua/petRua";
 import { usuarioBody } from "../business/usuario/usuario";
 import { validarEmail } from "../business/validarEmail";
 import IClinica from "../models/clinica/clinica";
@@ -508,7 +508,7 @@ export const deletarPet = async (req: Request, res: Response) => {
 //
 // GET - http://localhost:3000/petRua
 export const buscarPetsRua = async(req: Request, res: Response) => {
-  res.status(200).send(listaDePetsDeRua);
+  res.status(200).send(listaDePetsDeRua.map(p => switchPorteRua(p)));
 }
 
 // GET - http://localhost:3000/petRua/:petRuaId
@@ -520,7 +520,7 @@ export const buscarPetsRuaById = async (req: Request, res: Response) => {
       const petRuaInfo: IPetRua | undefined = listaDePetsDeRua.find(p => p.petRuaId === petRuaId)
 
       return petRuaInfo ? 
-        res.status(200).send(petRuaInfo) :
+        res.status(200).send(switchPorteRua(petRuaInfo)) :
         res.status(404).send("petRua inexistente, tente novamente")
     }
 
