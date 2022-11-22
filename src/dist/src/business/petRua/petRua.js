@@ -23,7 +23,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.petRuaBody = void 0;
+exports.switchPorteRua = exports.petRuaBody = void 0;
 var yup = __importStar(require("yup"));
 exports.petRuaBody = yup.object().shape({
     petRuaId: yup.number(),
@@ -35,4 +35,19 @@ exports.petRuaBody = yup.object().shape({
     porte: yup.number().required().min(0).max(2),
     observacoes: yup.string()
 });
+var switchPorteRua = function (pet) {
+    switch (pet.porte) {
+        case 0:
+            pet.porte = 'Pequeno';
+            break;
+        case 1:
+            pet.porte = 'Medio';
+            break;
+        case 2:
+            pet.porte = 'Grande';
+            break;
+    }
+    return pet;
+};
+exports.switchPorteRua = switchPorteRua;
 //# sourceMappingURL=petRua.js.map

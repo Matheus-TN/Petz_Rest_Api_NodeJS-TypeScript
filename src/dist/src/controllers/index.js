@@ -563,7 +563,7 @@ exports.deletarPet = deletarPet;
 // GET - http://localhost:3000/petRua
 var buscarPetsRua = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
-        res.status(200).send(exports.listaDePetsDeRua);
+        res.status(200).send(exports.listaDePetsDeRua.map(function (p) { return (0, petRua_1.switchPorteRua)(p); }));
         return [2 /*return*/];
     });
 }); };
@@ -577,7 +577,7 @@ var buscarPetsRuaById = function (req, res) { return __awaiter(void 0, void 0, v
             if (petRuaId_1 !== undefined && petRuaId_1 > 0) {
                 petRuaInfo = exports.listaDePetsDeRua.find(function (p) { return p.petRuaId === petRuaId_1; });
                 return [2 /*return*/, petRuaInfo ?
-                        res.status(200).send(petRuaInfo) :
+                        res.status(200).send((0, petRua_1.switchPorteRua)(petRuaInfo)) :
                         res.status(404).send("petRua inexistente, tente novamente")];
             }
             return [2 /*return*/, res.status(404).send("Por favor inserir petRuaId valido")];
