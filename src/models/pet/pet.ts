@@ -4,7 +4,7 @@ export default interface IPet{
     nome:string,
     raca:string,
     idade:number,
-    porte:number,
+    porte:any,
     alergias?:string,
     doencas?:string
 }

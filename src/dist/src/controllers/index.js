@@ -405,7 +405,7 @@ exports.deletarUsuario = deletarUsuario;
 // GET - http://localhost:3000/pet
 var buscarPets = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
-        res.status(200).send(exports.listaDePets);
+        res.status(200).send(exports.listaDePets.map(function (p) { return (0, pet_1.switchPorte)(p); }));
         return [2 /*return*/];
     });
 }); };
@@ -419,7 +419,7 @@ var buscarPetsById = function (req, res) { return __awaiter(void 0, void 0, void
             if (petId_1 !== undefined && petId_1 > 0) {
                 petInfo = exports.listaDePets.find(function (p) { return p.petId === petId_1; });
                 return [2 /*return*/, petInfo ?
-                        res.status(200).send(petInfo) :
+                        res.status(200).send((0, pet_1.switchPorte)(petInfo)) :
                         res.status(404).send("Pet inexistente, tente novamente")];
             }
             return [2 /*return*/, res.status(404).send("Por favor inserir petId valido")];
@@ -440,7 +440,7 @@ var buscarPetsByUserId = function (req, res) { return __awaiter(void 0, void 0, 
             if (userId_1 !== undefined && userId_1 > 0) {
                 userInfo = exports.listaDeUsuarios.find(function (u) { return u.usuarioId === userId_1; });
                 return [2 /*return*/, userInfo ?
-                        res.status(200).send(exports.listaDePets.filter(function (p) { return p.idUsuario === userId_1; })) :
+                        res.status(200).send(exports.listaDePets.filter(function (p) { return p.idUsuario === userId_1; }).map(function (p) { return (0, pet_1.switchPorte)(p); })) :
                         res.status(404).send("Usuario inexistente, tente novamente")];
             }
             return [2 /*return*/, res.status(404).send("Por favor inserir userId valido")];
@@ -463,7 +463,7 @@ var buscarPetsByClinicaId = function (req, res) { return __awaiter(void 0, void 
                 exports.listaDeConsultas
                     .filter(function (c) { return c.idClinica === clinicaId_1; })
                     .forEach(function (c) { return petsList_1.push(exports.listaDePets.find(function (p) { return p.petId === c.idPet; })); });
-                return [2 /*return*/, res.status(200).send(petsList_1)];
+                return [2 /*return*/, res.status(200).send(petsList_1.map(function (p) { return (0, pet_1.switchPorte)(p); }))];
             }
         }
         catch (error) {

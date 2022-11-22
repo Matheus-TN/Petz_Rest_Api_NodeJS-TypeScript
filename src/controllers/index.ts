@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import * as yup from "yup";
 import { clinicaBody, clinicaValido } from "../business/clinica/clinica";
 import { consultaBody, consultaValida } from "../business/consulta/consulta";
-import { petBody, petValido, petValidoParaAtualizar } from "../business/pet/pet";
+import { petBody, petValido, petValidoParaAtualizar, switchPorte } from "../business/pet/pet";
 import { petRuaBody } from "../business/petRua/petRua";
 import { usuarioBody } from "../business/usuario/usuario";
 import { validarEmail } from "../business/validarEmail";
@@ -364,7 +364,7 @@ export const deletarUsuario = async (req: Request, res: Response) => {
 //
 // GET - http://localhost:3000/pet
 export const buscarPets = async (req: Request, res: Response) => {
-  res.status(200).send(listaDePets);
+  res.status(200).send(listaDePets.map(p => switchPorte(p)));
 };
 
 // GET - http://localhost:3000/pet/:petId
@@ -374,9 +374,9 @@ export const buscarPetsById = async (req: Request, res: Response) => {
 
     if(petId !== undefined && petId > 0){
       const petInfo: IPet | undefined = listaDePets.find(p => p.petId === petId);
-
+      
       return petInfo ? 
-        res.status(200).send(petInfo) :
+        res.status(200).send(switchPorte(petInfo)) :
         res.status(404).send("Pet inexistente, tente novamente")
     }
 
@@ -396,7 +396,7 @@ export const buscarPetsByUserId = async (req: Request, res: Response) => {
       const userInfo: IUsuario | undefined = listaDeUsuarios.find(u => u.usuarioId === userId)
 
       return userInfo ? 
-        res.status(200).send(listaDePets.filter(p => p.idUsuario === userId)) : 
+        res.status(200).send(listaDePets.filter(p => p.idUsuario === userId).map(p => switchPorte(p))) : 
         res.status(404).send("Usuario inexistente, tente novamente")
     }
 
@@ -419,7 +419,7 @@ export const buscarPetsByClinicaId = async (req: Request, res: Response) => {
         .filter(c => c.idClinica === clinicaId)
         .forEach(c => petsList.push(listaDePets.find(p => p.petId === c.idPet)))
 
-      return res.status(200).send(petsList);
+      return res.status(200).send(petsList.map(p => switchPorte(p)));
     }
   }
   catch(error){

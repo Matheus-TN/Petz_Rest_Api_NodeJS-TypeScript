@@ -23,7 +23,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.petValidoParaAtualizar = exports.petValido = exports.petBody = void 0;
+exports.switchPorte = exports.petValidoParaAtualizar = exports.petValido = exports.petBody = void 0;
 var yup = __importStar(require("yup"));
 var controllers_1 = require("../../controllers");
 exports.petBody = yup.object().shape({
@@ -44,4 +44,19 @@ var petValidoParaAtualizar = function (idUsuario, petId, nome) {
     return controllers_1.listaDePets.find(function (p) { return p.idUsuario === idUsuario && p.petId !== petId && p.nome === nome; }) === undefined;
 };
 exports.petValidoParaAtualizar = petValidoParaAtualizar;
+var switchPorte = function (pet) {
+    switch (pet.porte) {
+        case 0:
+            pet.porte = 'Pequeno';
+            break;
+        case 1:
+            pet.porte = 'Medio';
+            break;
+        case 2:
+            pet.porte = 'Grande';
+            break;
+    }
+    return pet;
+};
+exports.switchPorte = switchPorte;
 //# sourceMappingURL=pet.js.map

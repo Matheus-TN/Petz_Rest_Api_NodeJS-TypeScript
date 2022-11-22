@@ -21,3 +21,20 @@ export const petValidoParaAtualizar = (idUsuario: number, petId: number, nome: s
     return listaDePets.find(p => p.idUsuario === idUsuario && p.petId !== petId && p.nome === nome) === undefined
 }
 
+export const switchPorte = (pet: IPet) =>{
+    switch (pet.porte){
+        case 0: 
+            pet.porte = 'Pequeno'
+            break;
+
+        case 1: 
+            pet.porte = 'Medio'
+            break;
+
+        case 2: 
+            pet.porte = 'Grande'
+            break;
+    }
+
+    return pet;
+}
