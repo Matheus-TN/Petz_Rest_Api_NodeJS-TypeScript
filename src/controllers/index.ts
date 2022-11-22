@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import * as yup from "yup";
-import { clinicaBody, clinicaValido } from "../business/clinica/clinica";
+import { clinicaBody, clinicaValido, valoresDefault } from "../business/clinica/clinica";
 import { consultaBody, consultaValida } from "../business/consulta/consulta";
 import { petBody, petValido, petValidoParaAtualizar, switchPorte } from "../business/pet/pet";
 import { petRuaBody, switchPorteRua} from "../business/petRua/petRua";
@@ -553,9 +553,7 @@ export const criarPetRua = async(req: Request<{}, {}, IPetRua>, res: Response) =
 //
 // GET - http://localhost:3000/clinica
 export const buscarClinicas = async(req: Request, res: Response) => {
-  listaDeClinicas.forEach(c => c.horarios ?? 'Não tem horários disponíveis');
-
-  return res.status(200).send(listaDeClinicas);
+  return res.status(200).send(listaDeClinicas.map(c => valoresDefault(c)));
 }
 
 // GET - http://localhost:3000/clinica/:clinicaId
@@ -569,7 +567,7 @@ export const buscarClinicasById = async (req: Request, res: Response) => {
       clinicaInfo.horarios ?? 'Não tem horários disponíveis';
 
       return clinicaInfo ?
-        res.status(200).send(clinicaInfo) :
+        res.status(200).send(valoresDefault(clinicaInfo)) :
         res.status(404).send("Clinica inexistente, tente novamente")
     }
 

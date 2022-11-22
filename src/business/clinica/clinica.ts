@@ -19,3 +19,13 @@ export const clinicaBody: yup.SchemaOf<IClinica> = yup.object().shape({
 export const clinicaValido = (clinicaId: number, nome: string, crmv: string): boolean => {
     return listaDeClinicas.find(c => c.clinicaId !== clinicaId && (c.nome === nome || c.crmv === crmv)) === undefined
 }
+
+export const valoresDefault = (clinica: IClinica) => {
+    if(clinica.endereco === '') clinica.endereco = 'Endereço não cadastrado'
+    if(clinica.sobre === '') clinica.sobre = 'Sobre não cadastrado'
+    if(clinica.servicos === '') clinica.servicos = 'Serviços não cadastrado'
+    if(clinica.horarios.length === 0) clinica.horarios.push('Seg. - Sex. das 8:00 - 17:00') 
+    if(clinica.pagamentos.length === 0) clinica.pagamentos.push('Mastercard') 
+
+    return clinica;
+}

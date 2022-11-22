@@ -617,8 +617,7 @@ exports.criarPetRua = criarPetRua;
 // GET - http://localhost:3000/clinica
 var buscarClinicas = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
-        exports.listaDeClinicas.forEach(function (c) { var _a; return (_a = c.horarios) !== null && _a !== void 0 ? _a : 'Não tem horários disponíveis'; });
-        return [2 /*return*/, res.status(200).send(exports.listaDeClinicas)];
+        return [2 /*return*/, res.status(200).send(exports.listaDeClinicas.map(function (c) { return (0, clinica_1.valoresDefault)(c); }))];
     });
 }); };
 exports.buscarClinicas = buscarClinicas;
@@ -633,7 +632,7 @@ var buscarClinicasById = function (req, res) { return __awaiter(void 0, void 0, 
                 clinicaInfo = exports.listaDeClinicas.find(function (c) { return c.clinicaId === clinicaId_2; });
                 (_a = clinicaInfo.horarios) !== null && _a !== void 0 ? _a : 'Não tem horários disponíveis';
                 return [2 /*return*/, clinicaInfo ?
-                        res.status(200).send(clinicaInfo) :
+                        res.status(200).send((0, clinica_1.valoresDefault)(clinicaInfo)) :
                         res.status(404).send("Clinica inexistente, tente novamente")];
             }
             return [2 /*return*/, res.status(404).send("Por favor inserir clinicaId valido")];

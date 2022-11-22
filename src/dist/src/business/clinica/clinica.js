@@ -23,7 +23,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.clinicaValido = exports.clinicaBody = void 0;
+exports.valoresDefault = exports.clinicaValido = exports.clinicaBody = void 0;
 var yup = __importStar(require("yup"));
 var controllers_1 = require("../../controllers");
 exports.clinicaBody = yup.object().shape({
@@ -43,4 +43,18 @@ var clinicaValido = function (clinicaId, nome, crmv) {
     return controllers_1.listaDeClinicas.find(function (c) { return c.clinicaId !== clinicaId && (c.nome === nome || c.crmv === crmv); }) === undefined;
 };
 exports.clinicaValido = clinicaValido;
+var valoresDefault = function (clinica) {
+    if (clinica.endereco === '')
+        clinica.endereco = 'Endereço não cadastrado';
+    if (clinica.sobre === '')
+        clinica.sobre = 'Sobre não cadastrado';
+    if (clinica.servicos === '')
+        clinica.servicos = 'Serviços não cadastrado';
+    if (clinica.horarios.length === 0)
+        clinica.horarios.push('Seg. - Sex. das 8:00 - 17:00');
+    if (clinica.pagamentos.length === 0)
+        clinica.pagamentos.push('Mastercard');
+    return clinica;
+};
+exports.valoresDefault = valoresDefault;
 //# sourceMappingURL=clinica.js.map
