@@ -553,7 +553,9 @@ export const criarPetRua = async(req: Request<{}, {}, IPetRua>, res: Response) =
 //
 // GET - http://localhost:3000/clinica
 export const buscarClinicas = async(req: Request, res: Response) => {
-  return res.status(200).send(listaDeClinicas.map(c => c.horarios ?? 'Não tem horários disponíveis'));
+  listaDeClinicas.forEach(c => c.horarios ?? 'Não tem horários disponíveis');
+
+  return res.status(200).send(listaDeClinicas);
 }
 
 // GET - http://localhost:3000/clinica/:clinicaId
