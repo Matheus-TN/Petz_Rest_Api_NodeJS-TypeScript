@@ -8,6 +8,7 @@ import {
   buscarPets,
   buscarPetsById,
   buscarPetsByUserId,
+  buscarPetsByClinicaId,
   criarPet,
   atualizarPet,
   deletarPet,
@@ -23,6 +24,7 @@ import {
   buscarConsultasById,
   buscarConsultasByPetId,
   buscarConsultasByUserId,
+  buscarConsultasByClinicaId,
   criarConsulta,
   atualizarConsulta,
   deletarConsulta
@@ -45,6 +47,7 @@ app.delete("/usuario/:usuarioId", deletarUsuario);
 app.get("/pet", buscarPets);
 app.get("/pet/:petId", buscarPetsById);
 app.get("/petsByUserId/:userId", buscarPetsByUserId);
+app.get("/petsByClinicaId/:clinicaId", buscarPetsByClinicaId);
 app.post("/pet", criarPet);
 app.put("/pet", atualizarPet);
 app.delete("/pet/:petId", deletarPet);
@@ -63,6 +66,7 @@ app.get("/consulta", buscarConsultas);
 app.get("/consulta/:consultaId", buscarConsultasById);
 app.get("/consultasByPetId/:petId", buscarConsultasByPetId);
 app.get("/consultasByUserId/:userId", buscarConsultasByUserId);
+app.get("/consultasByClinicaId/:clinicaId", buscarConsultasByClinicaId)
 app.post("/consulta", criarConsulta);
 app.put("/consulta", atualizarConsulta);
 app.delete("/consulta/:consultaId", deletarConsulta)

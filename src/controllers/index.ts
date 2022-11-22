@@ -407,6 +407,27 @@ export const buscarPetsByUserId = async (req: Request, res: Response) => {
   }
 }
 
+// GET - http://localhost:3000/petsByClinicaId/:clinicaId
+export const buscarPetsByClinicaId = async (req: Request, res: Response) => {
+  try{
+    const clinicaId: number | undefined = parseInt(req.params.clinicaId);
+
+    if(clinicaId !== undefined && clinicaId > 0){
+      const petsList: IPet[] = [];
+
+      listaDeConsultas
+        .filter(c => c.idClinica === clinicaId)
+        .forEach(c => petsList.push(listaDePets.find(p => p.petId === c.idPet)))
+
+      return res.status(200).send(petsList);
+    }
+  }
+  catch(error){
+    return res.status(404).send(error)
+  }
+}
+
+
 // POST - http://localhost:3000/pet
 export const criarPet = async (req: Request<{}, {}, IPet>, res: Response) => {
   try {
@@ -686,6 +707,22 @@ export const buscarConsultasByUserId = async (req: Request, res: Response) => {
       return res.status(404).send(error)
     }
  }
+
+// GET - http://localhost:3000/consultasByClinicaId/:clinicaId
+export const buscarConsultasByClinicaId = async (req: Request, res: Response) => {
+  try {
+    const clinicaId: number | undefined = parseInt(req.params.clinicaId);
+
+    if(clinicaId !== undefined && clinicaId > 0){
+      return res.status(200).send(listaDeConsultas.filter(c => c.idClinica === clinicaId))
+    }
+
+    return res.status(404).send("Dados invalidos, tente novamente")
+  }
+  catch(error){
+    return res.status(404).send(error)
+  }
+}
 
 // POST - http://localhost:3000/consulta
 export const criarConsulta = async (req: Request<{}, {}, IConsulta>, res: Response) => {
