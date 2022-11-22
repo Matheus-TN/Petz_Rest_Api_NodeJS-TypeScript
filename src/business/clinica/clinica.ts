@@ -24,8 +24,8 @@ export const valoresDefault = (clinica: IClinica) => {
     if(clinica.endereco === '') clinica.endereco = 'Endereço não cadastrado'
     if(clinica.sobre === '') clinica.sobre = 'Sobre não cadastrado'
     if(clinica.servicos === '') clinica.servicos = 'Serviços não cadastrado'
-    if(clinica.horarios === undefined) clinica.horarios.push('Seg. - Sex. das 8:00 - 17:00') 
-    if(clinica.pagamentos === undefined) clinica.pagamentos.push('Mastercard') 
+    if(clinica.horarios === undefined) clinica.horarios = ['Seg. - Sex. das 8:00 - 17:00']
+    if(clinica.pagamentos === undefined) clinica.pagamentos = ['Mastercard']
 
     return clinica;
 }

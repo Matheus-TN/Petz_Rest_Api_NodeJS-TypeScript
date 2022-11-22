@@ -50,10 +50,10 @@ var valoresDefault = function (clinica) {
         clinica.sobre = 'Sobre não cadastrado';
     if (clinica.servicos === '')
         clinica.servicos = 'Serviços não cadastrado';
-    if (clinica.horarios.length === 0)
-        clinica.horarios.push('Seg. - Sex. das 8:00 - 17:00');
-    if (clinica.pagamentos.length === 0)
-        clinica.pagamentos.push('Mastercard');
+    if (clinica.horarios === undefined)
+        clinica.horarios = ['Seg. - Sex. das 8:00 - 17:00'];
+    if (clinica.pagamentos === undefined)
+        clinica.pagamentos = ['Mastercard'];
     return clinica;
 };
 exports.valoresDefault = valoresDefault;
